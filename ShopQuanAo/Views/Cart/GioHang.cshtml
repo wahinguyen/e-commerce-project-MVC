@@ -1,0 +1,121 @@
+﻿
+<link rel="stylesheet" href="~/css/style.css">
+<link rel="stylesheet" href="~/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/css/magnific-popup.css">
+<link rel="stylesheet" href="~/css/jquery-ui.css">
+<link rel="stylesheet" href="~/css/owl.carousel.min.css">
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Cart</strong></div>
+        </div>
+    </div>
+</div>
+
+<div class="site-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <div class="site-blocks-table">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th class="product-thumbnail">Image</th>
+                            <th class="product-name">Product</th>
+                            <th class="product-price">Price</th>
+                            <th class="product-quantity">Quantity</th>
+                            <th class="product-total">Total</th>
+                            <th class="product-remove">Remove</th>
+                        </tr>
+                        @if (ViewBag.cart != null)
+                        {
+                            @foreach (var item in ViewBag.cart)
+                            {
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <img src="~/images/@item.SanPham.HinhSP" alt="Image" class="img-fluid">
+                                    </td>
+                                    <td class="product-name">
+                                        <h2 class="h5 text-black">@item.SanPham.TenSP</h2>
+                                    </td>
+                                    <td>@item.SanPham.DonGia</td>
+                                    <td>
+                                        <form asp-controller="cart" asp-action="Update">
+                                            <div class="input-group mb-3" style="max-width: 120px;">
+
+                                                <div class="input-group-prepend">
+                                                    <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                                                </div>
+                                                <input type="hidden" name="MaSP" value="@item.SanPham.MaSP" />
+                                                <input class="form-control text-center" aria-label="Example text with button addon" aria-describedby="button-addon1" type="text" min="1" name="txtSoLuong" value="@item.SoLuong" />
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-outline-primary btn-sm btn-block">Update</button>
+                                        </form>
+                                    </td>
+                                    <td>@(item.SanPham.DonGia * item.SoLuong) VNĐ</td>
+                                    <td><a class="btn btn-primary btn-sm" asp-controller="cart" asp-action="remove" asp-route-id="@item.SanPham.MaSP" onclick=" return confirm('Xóa sản phẩm này?');">X</a></td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row mb-5">
+                    <div class="col-md-6">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                    </div>
+                    <div class="col-md-8 mb-3 mb-md-0">
+
+                    </div>
+                    <div class="col-md-4">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 pl-5">
+                <div class="row justify-content-end">
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-12 text-right border-bottom mb-5">
+                                <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <span class="text-black">Subtotal</span>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <strong class="text-black">@ViewBag.total</strong>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-md-6">
+                                <span class="text-black">Total</span>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <strong class="text-black">@ViewBag.total</strong>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a asp-controller="Cart" asp-action="Checkout" class="btn btn-primary btn-lg py-3 btn-block">Proceed To Checkout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

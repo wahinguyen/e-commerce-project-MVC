@@ -1,0 +1,45 @@
+﻿@using ShopQuanAo.Models
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+
+
+@model List<Order>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <h2>Đơn hàng</h2>
+            <h3>Count: @Model.Count</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Code</td>
+                        <td>Tên khách hàng</td>
+                        <td>Địa chỉ</td>
+                        <td>Email</td>
+                        <td>Số điện thoại</td>
+                        <td>Ngày đặt hàng</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Code</td>
+                            <td>@item.CustomerName</td>
+                            <td>@item.Address</td>
+                            <td>@item.Email</td>
+                            <td>@item.Phone</td>
+                            <td>@item.OrderDate.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <a class="btn btn-outline-info" asp-controller="Order" asp-action="Detail" asp-route-id="@item.OrderId">Xem</a>
+                                <a class="btn btn-outline-danger" asp-controller="Order" asp-action="Delete" asp-route-id="@item.OrderId">Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            </main>
+</div>

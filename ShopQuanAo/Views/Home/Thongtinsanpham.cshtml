@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewData["Title"] = "Thongtinsanpham";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ShopQuanAo.Models.SanPhamVM
+
+<link rel="stylesheet" href="~/css/style.css">
+<link rel="stylesheet" href="~/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/css/magnific-popup.css">
+<link rel="stylesheet" href="~/css/jquery-ui.css">
+<link rel="stylesheet" href="~/css/owl.carousel.min.css">
+
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">@Html.DisplayFor(model => model.Sanpham.TenSP)</strong></div>
+        </div>
+    </div>
+</div>
+
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="~/images/@Model.Sanpham.HinhSP" class="img-fluid" alt="SanPham" />
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-black">@Html.DisplayFor(model => model.Sanpham.TenSP)</h2>
+                <br />
+                <p>@Html.DisplayFor(model => model.Sanpham.Description)</p>
+                <br />
+                <p><strong class="text-primary h4">@Html.DisplayFor(model => model.Sanpham.DonGia) VND</strong></p>
+                <p><a asp-controller="Cart" asp-action="Buy" asp-route-id="@Model.Sanpham.MaSP" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="site-section block-3 site-blocks-2 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7 site-section-heading text-center pt-4">
+                <h2>Featured Products</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="nonloop-block-3 owl-carousel">
+                    @foreach (var item in Model.ListSanPhamFeature)
+                    {
+                        <div class="item">
+                            <div class="block-4 text-center">
+
+                                <figure class="block-4-image">
+                                    <a asp-controller="Home" asp-action="Thongtinsanpham" asp-route-id="@item.MaSP">  <img src="~/images/@item.HinhSP" alt="Image placeholder" class="img-fluid" /></a>
+                                </figure>
+                                <div class="block-4-text p-4">
+                                    <h3><a asp-controller="Home" asp-action="Thongtinsanpham" asp-route-id="@item.MaSP">@item.TenSP</a></h3>
+                                    <p class="mb-0">@item.Description</p>
+                                    <p class="text-primary font-weight-bold">@item.DonGia VNĐ</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

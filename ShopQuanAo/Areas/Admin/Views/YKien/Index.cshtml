@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ShopQuanAo.Models.Contact>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+    <head>
+        <title>ProShop &mdash; Colorlib e-Commerce Template</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+        <link rel="stylesheet" href="~/fonts/icomoon/style.css">
+
+        <link rel="stylesheet" href="~/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/css/magnific-popup.css">
+        <link rel="stylesheet" href="~/css/jquery-ui.css">
+        <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+
+        <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
+
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+        <link rel="stylesheet" href="~/css/aos.css">
+
+        <link rel="stylesheet" href="~/css/style.css">
+        <link rel="stylesheet" href="~/css/StyleSheet.css">
+
+    </head>
+    <div id="layoutSidenav_content">
+        <main>
+            <h2>Ý kiến khách hàng</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ContactID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Phone)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Address)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContactID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.ContactID">Xem</a>
+                            <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.ContactID">Xóa</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            </main>
+</div>

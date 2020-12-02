@@ -1,0 +1,100 @@
+﻿@model IEnumerable<ShopQuanAo.Models.SanPham>
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+    <head>
+        <title>ProShop &mdash; Colorlib e-Commerce Template</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+        <link rel="stylesheet" href="~/fonts/icomoon/style.css">
+
+        <link rel="stylesheet" href="~/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/css/magnific-popup.css">
+        <link rel="stylesheet" href="~/css/jquery-ui.css">
+        <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+
+        <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
+
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+        <link rel="stylesheet" href="~/css/aos.css">
+
+        <link rel="stylesheet" href="~/css/style.css">
+        <link rel="stylesheet" href="~/css/StyleSheet.css">
+
+    </head>
+    <div id="layoutSidenav_content">
+        <main>
+            <h1 style="color:black">Sản Phẩm</h1>
+            <p>
+                <a style="margin-right:10px" class="btn btn-warning" asp-action="Create">Tạo mới sản phẩm</a>
+
+                <a class="btn btn-outline-dark" asp-action="Nhap">Nhập hàng</a>
+            </p>
+            <table class="table Search">
+                <thead>
+                    <tr>
+                        <th>
+                            Tên sản phẩm
+                        </th>
+                        <th>
+                            Đơn giá
+                        </th>
+                        <th>
+                            Hình ảnh
+                        </th>
+                        <th>
+                            Mô tả
+                        </th>
+                        <th>
+                            Tên loại
+                        </th>
+                        <th>
+                            Tồn kho
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="Search">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenSP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DonGia)
+                            </td>
+                            <td>
+                                <img src="~/images/@item.HinhSP" class="img-thumbnail" width="100" height="100" alt="SanPham" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LoaiSanPham.TenLoaiSP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SoLuong)
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-dark" asp-action="Edit" asp-route-id="@item.MaSP">Sửa</a>
+                                <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.MaSP">Xem</a>
+                                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.MaSP">Xóa</a>
+
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        </main>
+        </div>
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

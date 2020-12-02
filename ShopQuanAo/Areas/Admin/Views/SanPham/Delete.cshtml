@@ -1,0 +1,54 @@
+﻿@model ShopQuanAo.Models.SanPham
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+    <div id="layoutSidenav_content">
+        <main>
+
+            <h3>Bạn có chắc muốn xóa sản phẩm này?</h3>
+            <div>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        Tên sản phẩm:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.TenSP)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Đơn giá:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.DonGia)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Hình ảnh:
+                    </dt>
+                    <dd class="col-sm-10">
+                        <img src="~/images/@Model.HinhSP" class="img-thumbnail" width="150" height="150" alt="SanPham" />
+                    </dd>
+                    <dt class="col-sm-2">
+                        Mô tả:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Mã loại:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.LoaiSanPham.MaLoaiSP)
+                    </dd>
+                </dl>
+
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="MaSP" />
+                    <input type="submit" value="Xóa" class="btn btn-danger" onclick=" return confirm('Xóa sản phẩm này?');" />
+                    <a class="btn btn-outline-warning" asp-action="Index">Quay về</a>
+                </form>
+            </div>
+            </main>
+</div>

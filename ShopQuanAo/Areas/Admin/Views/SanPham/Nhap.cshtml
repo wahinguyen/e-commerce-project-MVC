@@ -1,0 +1,38 @@
+﻿@model ShopQuanAo.Models.SanPham
+
+@{
+    ViewData["Title"] = "Nhap";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+    <div id="layoutSidenav_content">
+        <main>
+            <h3 style="color:black">Nhập tồn kho</h3>
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="Nhap">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label style="color:black" asp-for="MaSP" class="control-label"></label>
+                            <select asp-for="MaSP" class="form-control" asp-items="ViewBag.MaSP"></select>
+                        </div>
+                        <div class="form-group">
+                            <label style="color:black" asp-for="SoLuong" class="control-label"></label>
+                            <input asp-for="SoLuong" class="form-control" />
+                            <span asp-validation-for="SoLuong" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Nhập" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <a class="btn btn-outline-warning" asp-action="Index">Quay về</a>
+            </div>
+        </main>
+    </div>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

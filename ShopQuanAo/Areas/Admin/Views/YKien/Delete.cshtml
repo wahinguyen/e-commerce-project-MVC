@@ -1,0 +1,54 @@
+﻿@model ShopQuanAo.Models.Contact
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+    <div id="layoutSidenav_content">
+        <main>
+
+            <h3>Bạn có chắc chắn muốn xóa phản hồi này?</h3>
+            <div>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Phone)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Address)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Address)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Message)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Message)
+                    </dd>
+                </dl>
+
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="ContactID" />
+                    <input type="submit" value="Xóa" class="btn btn-danger" /> |
+                    <a class="btn btn-outline-warning" asp-action="Index">Quay về</a>
+                </form>
+            </div>
+</main>
+</div>

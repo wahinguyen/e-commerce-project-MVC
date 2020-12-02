@@ -1,0 +1,55 @@
+﻿@model ShopQuanAo.Models.SanPham
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+    <div id="layoutSidenav_content">
+        <main>
+
+            <h3>Chỉnh sửa</h3>
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="Edit" asp-controller="SanPham" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="MaSP" />
+                        <div class="form-group">
+                            <label class="control-label">Tên sản phẩm</label>
+                            <input asp-for="TenSP" class="form-control" />
+                            <span asp-validation-for="TenSP" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Đơn giá</label>
+                            <input asp-for="DonGia" class="form-control" />
+                            <span asp-validation-for="DonGia" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Loại sản phẩm</label>
+                            <select asp-for="MaLoaiSP" class="form-control" asp-items="ViewBag.MaLoaiSP"></select>
+                            <span asp-validation-for="MaLoaiSP" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Hình ảnh</label>
+                            <input class="form-control" type="file" name="photo"/>
+                            <img src="~/images/@Model.HinhSP"  class="img-thumbnail" width="120" height="120" alt="SanPham" />
+                            <span asp-validation-for="HinhSP" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Mô tả</label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Lưu" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <a class="btn btn-outline-warning" asp-action="Index">Quay về</a>
+            </div>
+            </main>
+        </div>

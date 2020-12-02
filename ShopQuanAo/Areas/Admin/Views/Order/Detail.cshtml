@@ -1,0 +1,88 @@
+﻿@model ShopQuanAo.Models.Order
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div>
+                <h3>Chi tiết đơn hàng</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-9">
+                        <dl class="row">
+                            <dt class="col-sm-3">
+                                Mã đơn hàng
+                            </dt>
+                            <dd class="col-sm-9">
+                                @Html.DisplayFor(model => model.Code)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Tên khách hàng:
+                            </dt>
+                            <dd class="col-sm-9">
+                                @Html.DisplayFor(model => model.CustomerName)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Địa chỉ
+                            </dt>
+                            <dd class="col-sm-9">
+                                @Html.DisplayFor(model =>
+                                model.Address)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Số điện thoại
+                            </dt>
+                            <dd class="col-sm-9">
+                                @Html.DisplayFor(model =>
+                                model.Phone)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td>STT</td>
+                                <td>Tên sản phẩm</td>
+                                <td>Hình ảnh</td>
+                                <td>Số lượng</td>
+                                <td>Đơn giá</td>
+                                <td>Tổng tiền</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.Order != null)
+                            {
+                                int i = 1;
+                                @foreach (var item in ViewBag.Order)
+                                {
+                                    <tr>
+
+                                        <td>@(i++)</td>
+                                        <td>@item.SanPham.TenSP</td>
+                                        <td><img src="~/images/@item.SanPham.HinhSP" class="img-thumbnail" width="100px" height="100px" alt="Sản phẩm" /></td>
+                                        <td>@item.SoLuong</td>
+                                        <td>@item.SanPham.DonGia</td>
+                                        <td>@(item.SoLuong * @item.SanPham.DonGia)</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                        <tr>
+                            <td align="right" colspan="6">Total:</td>
+                            <td>@ViewBag.Total</td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div>
+                <a class="btn btn-outline-warning" asp-controller="Home" asp-action="Index" asp-area="">Quay về</a>
+            </div>
+            </main>
+        </div>
+

@@ -1,0 +1,64 @@
+﻿@model ShopQuanAo.Models.LoaiSanPham
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+    <div id="layoutSidenav_content">
+        <main>
+            <h3 style="margin-top:50px">Danh sách sản phẩm "@Html.DisplayFor(model => model.TenLoaiSP)"</h3>
+            <div>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-9">
+                        <dl class="row">
+                            <dt class="col-sm-3">
+                                Mã loại sản phẩm:
+                            </dt>
+                            <dd class="col-sm-9">
+                                @Html.DisplayFor(model => model.MaLoaiSP)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Tên loại sản phẩm:
+                            </dt>
+                            <dd class="col-sm-9">
+                                @Html.DisplayFor(model => model.TenLoaiSP)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td>Id</td>
+                                <td>Product Name</td>
+                                <td>Product Image</td>
+                                <td>Product Price</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.Category != null)
+                            {
+                                int i = 1;
+                                @foreach (var item in ViewBag.Category)
+                                {
+                                    <tr>
+
+                                        <td>@(i++)</td>
+                                        <td>@item.TenSP</td>
+                                        <td><img src="~/images/@item.HinhSP" class="img-thumbnail" width="100px" height="100px" alt="SanPham" /></td>
+                                        @*<td>@item.Quantity</td>*@
+                                        <td>@item.DonGia</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <a class="btn btn-outline-warning" asp-action="Index">Quay về</a>
+            </div>
+        </main>
+</div>

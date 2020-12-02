@@ -1,0 +1,31 @@
+﻿@model ShopQuanAo.Models.LoaiSanPham
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+    <div id="layoutSidenav_content">
+        <main>
+            <h3 style="margin-top:60px">Tạo mới loại sản phẩm</h3>
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label class="control-label"> Tên loại sản phẩm:</label>
+                            <input asp-for="TenLoaiSP" class="form-control" />
+                            <span asp-validation-for="TenLoaiSP" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Tạo mới" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <a class="btn btn-outline-warning" asp-action="Index">Quay về</a>
+            </div>
+            </main>
+        </div>

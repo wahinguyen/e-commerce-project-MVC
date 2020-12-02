@@ -1,0 +1,132 @@
+﻿@*@model ShopQuanAo.Models.Contact
+
+    @{
+        ViewData["Title"] = "Create";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h1>Create</h1>
+
+    <h4>Contact</h4>
+    <hr />
+    <div class="site-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Phone" class="control-label"></label>
+                            <input asp-for="Phone" class="form-control" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address" class="control-label"></label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Message" class="control-label"></label>
+                            <input asp-for="Message" class="form-control" />
+                            <span asp-validation-for="Message" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Gửi" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>*@
+@model ShopQuanAo.Models.Contact
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/style.css">
+<link rel="stylesheet" href="~/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/css/magnific-popup.css">
+<link rel="stylesheet" href="~/css/jquery-ui.css">
+<link rel="stylesheet" href="~/css/owl.carousel.min.css">
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-0"><a asp-action="Trangchu" asp-controller="Home">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Contact</strong></div>
+        </div>
+    </div>
+</div>
+
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">Get In Touch</h2>
+            </div>
+            <div class="col-md-6">
+
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="p-3 p-lg-5 border">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label asp-for="Name" class="control-label"></label>
+                                <input asp-for="Name" class="form-control">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Email" class="control-label"></label>
+                                <input asp-for="Email" class="form-control">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label asp-for="Phone" class="control-label"></label>
+                                <input asp-for="Phone" class="form-control">
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label asp-for="Address" class="control-label"> </label>
+                                <input asp-for="Address" class="form-control">
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label asp-for="Message" class="control-label"></label>
+                                <textarea asp-for="Message" cols="30" rows="7" class="form-control"></textarea>
+                                <span asp-validation-for="Message" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <input type="submit" class="btn btn-primary" value="Send">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-md-6">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.453650782732!2d106.66530581386753!3d10.776524992321471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x429098e67e8786a7!2zS2hvYSBDw7RuZyBOZ2jhu4cgVGjDtG5nIFRpbiAtIMOQ4bqhaSBI4buNYyBOZ2_huqFpIE5n4buvIFRpbiBI4buNYyBUaMOgbmggUGjhu5EgSOG7kyBDaMOtIE1pbmg!5e0!3m2!1svi!2s!4v1593928101815!5m2!1svi!2s" width="500" height="630" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            </div>
+
+        </div>
+
+    </div>
+</div>
