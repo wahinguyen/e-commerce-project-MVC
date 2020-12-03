@@ -128,14 +128,14 @@ namespace ShopQuanAo.Controllers
         }
 
         // GET: SanPham/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var sanPham = await _context.Sanphams.FindAsync(id);
+            var sanPham = _context.Sanphams.Find(id);
             if (sanPham == null)
             {
                 return NotFound();
@@ -149,34 +149,31 @@ namespace ShopQuanAo.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaSP,TenSP,DonGia,MaLoaiSP,HinhSP,Description")] SanPham sanPham, IFormFile photo)
+        public IActionResult Edit(int id, [Bind("MaSP,TenSP,DonGia,MaLoaiSP,HinhSP,Description")] SanPham sanPham, IFormFile photo)
         {
             if (id != sanPham.MaSP)
             {
                 return NotFound();
             }
-
-
+            
             if (ModelState.IsValid)
             {
                 try
                 {
                     if (photo == null || photo.Length == 0)
                     {
-                        sanPham.HinhSP = "";
-                        _context.Update(sanPham);
-                        await _context.SaveChangesAsync();
+                        sanPham.HinhSP = sanPham.HinhSP;
                     }
                     else
                     {
                         var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", photo.FileName);
                         var stream = new FileStream(path, FileMode.Create);
-                        photo.CopyTo(stream);
+                        photo.CopyToAsync(stream);
                         sanPham.HinhSP = photo.FileName;
-                        _context.Update(sanPham);
-                        await _context.SaveChangesAsync();
+                        _context.Sanphams.Update(sanPham);
                     }
-                    
+
+                    _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
