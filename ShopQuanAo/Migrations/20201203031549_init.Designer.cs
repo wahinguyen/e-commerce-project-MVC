@@ -10,8 +10,8 @@ using ShopQuanAo.Models;
 namespace ShopQuanAo.Migrations
 {
     [DbContext(typeof(SaleContext))]
-    [Migration("20200718052726_InitData")]
-    partial class InitData
+    [Migration("20201203031549_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,15 +50,15 @@ namespace ShopQuanAo.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "31d50504-6979-4b27-8f2d-667bb31f5a32",
-                            ConcurrencyStamp = "d456cd00-b455-4118-8773-648e5464b81d",
+                            Id = "04059e04-49bc-43dd-b7fd-409af89547d0",
+                            ConcurrencyStamp = "d416a92f-8b68-426f-bfdf-11373bd2e86b",
                             Name = "Visitor",
                             NormalizedName = "VISITOR"
                         },
                         new
                         {
-                            Id = "2e7a08d4-0ff6-4368-965e-bf8157d8d010",
-                            ConcurrencyStamp = "146eddf4-5bfb-4db2-aae9-22d105ba68c9",
+                            Id = "42bc1094-5820-496d-9c78-7af36b74b306",
+                            ConcurrencyStamp = "b6a99883-18ca-4cfc-b053-a557d35caf17",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -168,32 +168,6 @@ namespace ShopQuanAo.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ShopQuanAo.Models.ChiTietHoaDon", b =>
-                {
-                    b.Property<string>("MaHD")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<double>("DonGia")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("HoaDonMaHD")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MaSP")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SoLuong")
-                        .HasColumnType("int");
-
-                    b.HasKey("MaHD");
-
-                    b.HasIndex("HoaDonMaHD");
-
-                    b.HasIndex("MaSP");
-
-                    b.ToTable("ChiTietHoaDon");
-                });
-
             modelBuilder.Entity("ShopQuanAo.Models.Contact", b =>
                 {
                     b.Property<int>("ContactID")
@@ -224,34 +198,6 @@ namespace ShopQuanAo.Migrations
                     b.HasKey("ContactID");
 
                     b.ToTable("Contacts");
-                });
-
-            modelBuilder.Entity("ShopQuanAo.Models.HoaDon", b =>
-                {
-                    b.Property<int>("MaHD")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("MaKH")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("MaNV")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("NgayGiaoHang")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("NgayLapHD")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("MaHD");
-
-                    b.HasIndex("MaKH");
-
-                    b.HasIndex("MaNV");
-
-                    b.ToTable("HoaDon");
                 });
 
             modelBuilder.Entity("ShopQuanAo.Models.KhachHang", b =>
@@ -321,6 +267,10 @@ namespace ShopQuanAo.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
                     b.Property<string>("CustomerName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -358,9 +308,6 @@ namespace ShopQuanAo.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("DonGia")
-                        .HasColumnType("float");
-
                     b.Property<int>("MaSP")
                         .HasColumnType("int");
 
@@ -368,9 +315,6 @@ namespace ShopQuanAo.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("SoLuong")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TenSP")
                         .HasColumnType("int");
 
                     b.HasKey("OrderDetailId");
@@ -402,6 +346,9 @@ namespace ShopQuanAo.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MaLoaiSP")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SoLuong")
                         .HasColumnType("int");
 
                     b.Property<string>("TenSP")
@@ -536,30 +483,6 @@ namespace ShopQuanAo.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ShopQuanAo.Models.ChiTietHoaDon", b =>
-                {
-                    b.HasOne("ShopQuanAo.Models.HoaDon", null)
-                        .WithMany("ChiTietHoaDons")
-                        .HasForeignKey("HoaDonMaHD");
-
-                    b.HasOne("ShopQuanAo.Models.SanPham", "SanPham")
-                        .WithMany("ChiTietHoaDons")
-                        .HasForeignKey("MaSP")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ShopQuanAo.Models.HoaDon", b =>
-                {
-                    b.HasOne("ShopQuanAo.Models.KhachHang", "KhachHang")
-                        .WithMany("HoaDon")
-                        .HasForeignKey("MaKH");
-
-                    b.HasOne("ShopQuanAo.Models.NhanVien", "NhanVien")
-                        .WithMany("HoaDon")
-                        .HasForeignKey("MaNV");
-                });
-
             modelBuilder.Entity("ShopQuanAo.Models.Order", b =>
                 {
                     b.HasOne("ShopQuanAo.Models.KhachHang", "KhachHang")
@@ -574,7 +497,7 @@ namespace ShopQuanAo.Migrations
             modelBuilder.Entity("ShopQuanAo.Models.OrderDetail", b =>
                 {
                     b.HasOne("ShopQuanAo.Models.SanPham", "SanPham")
-                        .WithMany()
+                        .WithMany("OrderDetails")
                         .HasForeignKey("MaSP")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

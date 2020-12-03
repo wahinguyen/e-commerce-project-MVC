@@ -13,7 +13,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShopQuanAo.Models;
-using ShopQuanAo.Data;
 
 namespace ShopQuanAo
 {

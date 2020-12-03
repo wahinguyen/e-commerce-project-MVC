@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShopQuanAo.Migrations
 {
-    public partial class InitData : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -220,6 +220,7 @@ namespace ShopQuanAo.Migrations
                     MaSP = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TenSP = table.Column<string>(nullable: true),
+                    SoLuong = table.Column<int>(nullable: false),
                     DonGia = table.Column<double>(nullable: false),
                     MaLoaiSP = table.Column<int>(nullable: false),
                     HinhSP = table.Column<string>(nullable: true),
@@ -238,34 +239,6 @@ namespace ShopQuanAo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HoaDon",
-                columns: table => new
-                {
-                    MaHD = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MaKH = table.Column<string>(nullable: true),
-                    MaNV = table.Column<string>(nullable: true),
-                    NgayLapHD = table.Column<DateTime>(nullable: false),
-                    NgayGiaoHang = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HoaDon", x => x.MaHD);
-                    table.ForeignKey(
-                        name: "FK_HoaDon_KhachHangs_MaKH",
-                        column: x => x.MaKH,
-                        principalTable: "KhachHangs",
-                        principalColumn: "MaKH",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_HoaDon_NhanViens_MaNV",
-                        column: x => x.MaNV,
-                        principalTable: "NhanViens",
-                        principalColumn: "MaNV",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -273,6 +246,7 @@ namespace ShopQuanAo.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MaKH = table.Column<string>(nullable: true),
                     MaNV = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(maxLength: 250, nullable: true),
                     CustomerName = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
@@ -297,33 +271,6 @@ namespace ShopQuanAo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ChiTietHoaDon",
-                columns: table => new
-                {
-                    MaHD = table.Column<string>(nullable: false),
-                    MaSP = table.Column<int>(nullable: false),
-                    SoLuong = table.Column<int>(nullable: false),
-                    DonGia = table.Column<double>(nullable: false),
-                    HoaDonMaHD = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ChiTietHoaDon", x => x.MaHD);
-                    table.ForeignKey(
-                        name: "FK_ChiTietHoaDon_HoaDon_HoaDonMaHD",
-                        column: x => x.HoaDonMaHD,
-                        principalTable: "HoaDon",
-                        principalColumn: "MaHD",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ChiTietHoaDon_Sanphams_MaSP",
-                        column: x => x.MaSP,
-                        principalTable: "Sanphams",
-                        principalColumn: "MaSP",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OrderDetails",
                 columns: table => new
                 {
@@ -331,8 +278,6 @@ namespace ShopQuanAo.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<int>(nullable: false),
                     MaSP = table.Column<int>(nullable: false),
-                    TenSP = table.Column<int>(nullable: false),
-                    DonGia = table.Column<double>(nullable: false),
                     SoLuong = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -355,12 +300,12 @@ namespace ShopQuanAo.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "31d50504-6979-4b27-8f2d-667bb31f5a32", "d456cd00-b455-4118-8773-648e5464b81d", "Visitor", "VISITOR" });
+                values: new object[] { "04059e04-49bc-43dd-b7fd-409af89547d0", "d416a92f-8b68-426f-bfdf-11373bd2e86b", "Visitor", "VISITOR" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "2e7a08d4-0ff6-4368-965e-bf8157d8d010", "146eddf4-5bfb-4db2-aae9-22d105ba68c9", "Administrator", "ADMINISTRATOR" });
+                values: new object[] { "42bc1094-5820-496d-9c78-7af36b74b306", "b6a99883-18ca-4cfc-b053-a557d35caf17", "Administrator", "ADMINISTRATOR" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -400,26 +345,6 @@ namespace ShopQuanAo.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ChiTietHoaDon_HoaDonMaHD",
-                table: "ChiTietHoaDon",
-                column: "HoaDonMaHD");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ChiTietHoaDon_MaSP",
-                table: "ChiTietHoaDon",
-                column: "MaSP");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_HoaDon_MaKH",
-                table: "HoaDon",
-                column: "MaKH");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_HoaDon_MaNV",
-                table: "HoaDon",
-                column: "MaNV");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_MaSP",
@@ -465,9 +390,6 @@ namespace ShopQuanAo.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ChiTietHoaDon");
-
-            migrationBuilder.DropTable(
                 name: "Contacts");
 
             migrationBuilder.DropTable(
@@ -478,9 +400,6 @@ namespace ShopQuanAo.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "HoaDon");
 
             migrationBuilder.DropTable(
                 name: "Sanphams");
