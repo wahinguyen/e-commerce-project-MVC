@@ -21,12 +21,6 @@ namespace ShopQuanAo.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
-        [HttpGet]
-        public IActionResult ListUser()
-        {
-            var users = _userManager.Users;
-            return View(users);
-        }
 
         [HttpGet]
         public IActionResult Register()
@@ -81,8 +75,8 @@ namespace ShopQuanAo.Controllers
             else
             {
                 ModelState.AddModelError("", "Invalid UserName or Password");
-                return View();
             }
+            return View(userModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

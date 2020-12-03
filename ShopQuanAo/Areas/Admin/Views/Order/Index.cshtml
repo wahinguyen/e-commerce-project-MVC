@@ -32,7 +32,7 @@
                             <td>@item.Address</td>
                             <td>@item.Email</td>
                             <td>@item.Phone</td>
-                            <td>@item.OrderDate.ToString("dd/MM/yyyy")</td>
+                            <td>@item.OrderDate.ToString("dd/MM/yyyy h:mm tt")</td>
                             <td>
                                 <a class="btn btn-outline-info" asp-controller="Order" asp-action="Detail" asp-route-id="@item.OrderId">Xem</a>
                                 <a class="btn btn-outline-danger" asp-controller="Order" asp-action="Delete" asp-route-id="@item.OrderId">Xóa</a>

@@ -149,9 +149,14 @@ namespace ShopQuanAo.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("MaSP,TenSP,DonGia,MaLoaiSP,HinhSP,Description")] SanPham sanPham, IFormFile photo)
+        public IActionResult Edit(int id, SanPham sanPham, IFormFile photo)
         {
-            if (id != sanPham.MaSP)
+            var data = _context.Sanphams
+                .AsEnumerable()
+                .Where(s => s.MaSP == id)
+                .FirstOrDefault();
+
+            if (data == null)
             {
                 return NotFound();
             }
@@ -162,22 +167,22 @@ namespace ShopQuanAo.Controllers
                 {
                     if (photo == null || photo.Length == 0)
                     {
-                        sanPham.HinhSP = sanPham.HinhSP;
+                        data.HinhSP = data.HinhSP;
+                        _context.SaveChanges();
                     }
                     else
                     {
                         var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", photo.FileName);
                         var stream = new FileStream(path, FileMode.Create);
                         photo.CopyToAsync(stream);
-                        sanPham.HinhSP = photo.FileName;
-                        _context.Sanphams.Update(sanPham);
+                        data.HinhSP = photo.FileName;
+                        _context.SaveChanges();
                     }
 
-                    _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SanPhamExists(sanPham.MaSP))
+                    if (!SanPhamExists(data.MaSP))
                     {
                         return NotFound();
                     }

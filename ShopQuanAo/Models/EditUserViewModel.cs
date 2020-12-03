@@ -23,7 +23,6 @@ namespace ShopQuanAo.Models
         [EmailAddress]
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string Address { get; set; }
         public List<string> Claims { get; set; }
         public IList<string> Roles { get; set; }
     }

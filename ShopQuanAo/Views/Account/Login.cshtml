@@ -105,6 +105,8 @@
                             </div>
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                         <div class="form-group form-check">
                         </div>
                         <div class="form-group">
@@ -114,7 +116,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center links">
-                        Don't have an account?<a asp-controller="Account" asp-action="Register">Sign Up</a>
+                        Don't have an account? <a asp-controller="Account" asp-action="Register"> Sign Up</a>
                     </div>
                 </div>
             </div>
