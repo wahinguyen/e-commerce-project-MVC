@@ -1366,8 +1366,6 @@ C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\bin\Debug\netcoreapp3.1\runt
 C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\ShopQuanAo.csprojAssemblyReference.cache
-C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\ShopQuanAo.csproj.CoreCompileInputs.cache
-C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\ShopQuanAo.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\ShopQuanAo.RazorAssemblyInfo.cache
 C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\ShopQuanAo.RazorAssemblyInfo.cs
 C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\ShopQuanAo.AssemblyInfoInputs.cache
@@ -1432,3 +1430,5 @@ C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\stat
 C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\ShopQuanAo.dll
 C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\ShopQuanAo.pdb
 C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\ShopQuanAo.genruntimeconfig.cache
+C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\ShopQuanAo.csproj.CoreCompileInputs.cache
+C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\ShopQuanAo.MvcApplicationPartsAssemblyInfo.cache
