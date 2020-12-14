@@ -4,15 +4,32 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ShopQuanAo.Models;
+using PayPal.Core;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
+using PayPal.v1.Payments;
+using Microsoft.AspNetCore.Http;
+using Order = ShopQuanAo.Models.Order;
+using BraintreeHttp;
+using Microsoft.AspNetCore.Identity;
 
 namespace ShopQuanAo.Controllers
 {
     public class CartController : Controller
     {
         private readonly SaleContext db;
-        public CartController(SaleContext db)
+        private readonly string _clientId;
+        private readonly string _secretKey;
+        private readonly UserManager<User> _userManager;
+
+        public double TyGiaUSD = 23300;
+
+        public CartController(UserManager<User> userManager, SaleContext db, IConfiguration configuration)
         {
             this.db = db;
+            _userManager = userManager;
+            _clientId = configuration["PaypalSettings:ClientId"];
+            _secretKey = configuration["PaypalSettings:SecretKey"];
         }
 
         public IActionResult Index()
@@ -24,9 +41,11 @@ namespace ShopQuanAo.Controllers
             {
                 ViewBag.cart = cart;
                 ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
+                ViewBag.count = cart.Count();
             }
             return View();
         }
+
         public IActionResult GioHang()
         {
             var cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
@@ -36,18 +55,21 @@ namespace ShopQuanAo.Controllers
             {
                 ViewBag.cart = cart;
                 ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
+                ViewBag.count = cart.Count();
             }
             return View();
         }
+
         [Route("buy/{id}")]
         public IActionResult Buy(int id)
         {
+            
             if (SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart") == null)
             {
                 List<OrderDetail> cart = new List<OrderDetail>
-                {
-                    new OrderDetail { SanPham = db.Sanphams.FirstOrDefault(p => p.MaSP == id), SoLuong = 1}
-                };
+            {
+                new OrderDetail { SanPham = db.Sanphams.FirstOrDefault(p => p.MaSP == id), SoLuong = 1}
+            };
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
             else
@@ -61,6 +83,7 @@ namespace ShopQuanAo.Controllers
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
             return RedirectToAction("GioHang");
+            
         }
         [HttpPost]
         public IActionResult Update(int MaSP, int txtSoLuong)
@@ -99,19 +122,32 @@ namespace ShopQuanAo.Controllers
         {
             return View();
         }
+
         [HttpGet]
-        public IActionResult Checkout()
+        public async Task<IActionResult> Checkout()
         {
-            var cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
-            if (cart == null)
-                return View();
-            else
+            var name = User.Identity.Name;
+            var user = await  _userManager.FindByNameAsync(name);
+
+            if (User.Identity.IsAuthenticated)
             {
-                ViewBag.cart = cart;
-                ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
+                var cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+                if (cart == null)
+                    return View();
+                else
+                {
+                    ViewBag.cart = cart;
+                    ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
+                }
+                Order order = new Order()
+                {
+                    CustomerName = user.FirstName + " " + user.LastName,
+                    Email = user.Email,
+                    Phone = user.PhoneNumber,
+                };
+                return View(order);
             }
-            Order order = new Order();
-            return View(order);
+            return RedirectToAction("Login", "Account");
         }
         [HttpPost]
         public IActionResult Checkout(Order order)
@@ -151,6 +187,7 @@ namespace ShopQuanAo.Controllers
                         OrderId = query.OrderId,
                         MaSP = item.SanPham.MaSP,
                         SoLuong = item.SoLuong,
+                        ThanhTien = item.SanPham.DonGia * item.SoLuong,
                     });
 
                     var product = db.Sanphams
@@ -171,6 +208,112 @@ namespace ShopQuanAo.Controllers
             return View(order);
         }
 
-        
+        public async System.Threading.Tasks.Task<IActionResult> PaypalCheckout()
+        {
+            var environment = new SandboxEnvironment(_clientId, _secretKey);
+            var client = new PayPalHttpClient(environment);
+            List<OrderDetail> listCarts = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+            #region Create Paypal Order
+            var itemList = new ItemList()
+            {
+                Items = new List<Item>()
+            };
+
+            var total = Math.Round(listCarts.Sum(p => p.ThanhTien) / TyGiaUSD, 2);
+            foreach (var item in listCarts)
+            {
+                itemList.Items.Add(new Item()
+                {
+                    Name = item.SanPham.TenSP,
+                    Currency = "USD",
+                    Price = "10000",
+                    Quantity = "2",
+                    Sku = "sku",
+                    Tax = "0"
+                });
+            }
+            #endregion
+
+            var paypalOrderId = DateTime.Now.Ticks;
+            //var hostname = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            var payment = new Payment()
+            {
+                Intent = "sale",
+                Transactions = new List<Transaction>()
+                {
+                    new Transaction()
+                    {
+                        Amount = new Amount()
+                        {
+                            Total = "10000",
+                            Currency = "USD",
+                            Details = new AmountDetails
+                            {
+                                Tax = "0",
+                                Shipping = "0",
+                                Subtotal = total.ToString()
+                            }
+                        },
+                        ItemList = itemList,
+                        Description = $"Invoice #{paypalOrderId}",
+                        InvoiceNumber = paypalOrderId.ToString()
+                    }
+                },
+                RedirectUrls = new RedirectUrls()
+                {
+                    CancelUrl = $"",
+                    ReturnUrl = $""
+                },
+                Payer = new Payer()
+                {
+                    PaymentMethod = "paypal"
+                }
+            };
+            PaymentCreateRequest request = new PaymentCreateRequest();
+            request.RequestBody(payment);
+
+            try
+            {
+                var response = await client.Execute(request);
+                var statusCode = response.StatusCode;
+                Payment result = response.Result<Payment>();
+
+                var links = result.Links.GetEnumerator();
+                string paypalRedirectUrl = null;
+                while (links.MoveNext())
+                {
+                    LinkDescriptionObject lnk = links.Current;
+                    if (lnk.Rel.ToLower().Trim().Equals("approval_url"))
+                    {
+                        //saving the payapalredirect URL to which user will be redirected for payment  
+                        paypalRedirectUrl = lnk.Href;
+                    }
+                }
+
+                return Redirect(paypalRedirectUrl);
+            }
+            catch (HttpException httpException)
+            {
+                var statusCode = httpException.StatusCode;
+                var debugId = httpException.Headers.GetValues("PayPal-Debug-Id").FirstOrDefault();
+
+                //Process when Checkout with Paypal fails
+                return Redirect("/GioHang/CheckoutFail");
+            }
+        }
+
+        public IActionResult CheckoutFail()
+        {
+            //Tạo đơn hàng trong database với trạng thái thanh toán là "Chưa thanh toán"
+            //Xóa session
+            return View("Chưa thanh toán");
+        }
+
+        public IActionResult CheckoutSuccess()
+        {
+            //Tạo đơn hàng trong database với trạng thái thanh toán là "Paypal" và thành công
+            //Xóa session
+            return View("thành công");
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace ShopQuanAo.Models
         public int MaSP { get; set; }
         [DisplayName("Số lượng")]
         public int SoLuong { get; set; }
+        public double ThanhTien { get; set; }
         public virtual Order Order { get; set; }
         public virtual SanPham SanPham { get; set; }
     }

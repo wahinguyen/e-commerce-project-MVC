@@ -9,5 +9,6 @@ namespace ShopQuanAo.Models
     {
         public SanPham Sanpham { get; set; }
         public List<SanPham> ListSanPhamFeature { get; set; }
+        public int count { get; set; }
     }
 }

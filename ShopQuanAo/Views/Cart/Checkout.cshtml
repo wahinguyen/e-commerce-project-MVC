@@ -2,87 +2,6 @@
 @{
     ViewData["Title"] = "Checkout";
 }
-@*<div class="row">
-        <div class="col-lg-6">
-            <form asp-controller="Cart" asp-action="Checkout" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label asp-for="CustomerName" class="control-label"></label>
-                    <input asp-for="CustomerName" class="form-control" />
-                    <span asp-validation-for="CustomerName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Address" class="control-label"></label>
-                    <input asp-for="Address" class="form-control" />
-                    <span asp-validation-for="Address" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Email" class="control-label"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Phone" class="control-label"></label>
-                    <input asp-for="Phone" class="form-control" />
-                    <span asp-validation-for="Phone" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Buy" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="row">
-                    <div class="col-1">
-                        Id
-                    </div>
-                    <div class="col-lg-5">
-                        Tên SP
-                    </div>
-                    <div class="col-lg-2">
-                        Số lượng
-                    </div>
-                    <div class="col-lg-4">
-                        Giá Tiền
-                    </div>
-                </div>
-                @if (ViewBag.cart != null)
-                {
-                    int i = 1;
-                    @foreach (var item in ViewBag.cart)
-                    {
-                        <div class="row">
-                            <div class="col-1">
-                                @(i++)
-                            </div>
-                            <div class="col-lg-5">
-                                @item.SanPham.TenSP
-                            </div>
-                            <div class="col-lg-2">
-                                @item.SoLuong
-                            </div>
-                            <div class="col-lg-4">
-                                @(item.SanPham.DonGia * item.SoLuong)
-                            </div>
-                        </div>
-                    }
-                    <hr />
-                    <div class="row">
-                        <div class="col-lg-9">
-                            Tổng cộng:
-                        </div>
-                        <div class="col-lg-3">
-                            @ViewBag.total
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-info">Back To Home</a>
-    </div>*@
-
 
 <link rel="stylesheet" href="~/css/style.css">
 <link rel="stylesheet" href="~/css/bootstrap.min.css">
@@ -123,7 +42,7 @@
 
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label asp-for="Address" class="control-label"><span class="text-danger">Adress</span></label>
+                                <label asp-for="Address" class="control-label"><span class="text-danger">Address</span></label>
                                 <input asp-for="Address" class="form-control" placeholder="Address">
                                 <span asp-validation-for="Address" class="text-danger"></span>
                             </div>
@@ -139,6 +58,11 @@
                         <div class="form-group">
                             <input type="submit" value="Buy" class="btn btn-primary btn-lg py-3 btn-block" />
                         </div>
+                        @*<div class="cart_navigation">
+                            <a asp-controller="Cart" asp-action="PaypalCheckout">
+                                <img src="~/images/paypal.png" height="100" />
+                            </a>
+                        </div>*@
                     </form>
                 </div>
             </div>

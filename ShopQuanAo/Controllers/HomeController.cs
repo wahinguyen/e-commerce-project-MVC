@@ -20,8 +20,24 @@ namespace ShopQuanAo.Controllers
         {
             this._context = _context;
         }
+
+        public IActionResult GioHang()
+        {
+            var cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+            if (cart == null)
+                return View();
+            else
+            {
+                ViewBag.cart = cart;
+                ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
+                ViewBag.count = cart.Count();
+            }
+            return View();
+        }
+
         public IActionResult Index(int? page, int maloaisp = 0)
         {
+            
 
             var loaiSP = _context.LoaiSanPhams.ToList();
             Hashtable tenloaiSP = new Hashtable();
@@ -49,9 +65,19 @@ namespace ShopQuanAo.Controllers
             }
             else
             {
+                var cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+                if (cart == null)
+                    return View();
+                else
+                {
+                    ViewBag.cart = cart;
+                    ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
+                    ViewBag.count = cart.Count();
+                }
                 var sanPhams = _context.Sanphams.Include(s => s.LoaiSanPham).Where(x => x.MaLoaiSP == maloaisp);
                 return View(sanPhams);
             }
+
         }
         public async Task<IActionResult> Trangchu(int id)
         {

@@ -1,53 +1,4 @@
-﻿@*<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewData["Title"] - ShopQuanAo</title>
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </head>
-    <body>
-        <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ShopQuanAo</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-        <div class="container">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>
-
-        <footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; 2020 - ShopQuanAo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        @RenderSection("Scripts", required: false)
-    </body>
-    </html>//*@
-@using ShopQuanAo.Models
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>ProShop &mdash; Colorlib e-Commerce Template</title>
@@ -70,6 +21,29 @@
 
     <link rel="stylesheet" href="~/css/style.css">
     <link rel="stylesheet" href="~/css/StyleSheet.css">
+    <style>
+        .notification {
+            padding: 7px 7px;
+            position: absolute;
+        }
+
+            .notification:hover {
+            }
+
+            .notification .badge {
+                top: -10px;
+                right: -10px;
+                color: white;
+            }
+
+        .btn .badge1 {
+            position: absolute;
+            top: -13px;
+            background: #a2d2ff;
+            border-radius: 50%;
+            padding: 0px 8px;
+        }
+    </style>
 
 </head>
 <body>
@@ -80,10 +54,11 @@
                 <div class="container">
                     <div class="row align-items-center">
 
+
                         <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
                             <form action="" class="site-block-top-search">
                                 @*<span class="icon icon-search2"></span>
-                                <input type="text" class="form-control border-0" placeholder="Search">*@
+                <input type="text" class="form-control border-0" placeholder="Search">*@
                             </form>
                         </div>
 
@@ -92,14 +67,20 @@
                                 <a href="index.html" class="js-logo-clone">Huy Shop</a>
                             </div>
                         </div>
-
                         <div class="col-6 col-md-4 order-3 order-md-3 text-right float-right">
-                            @*<div class="site-top-icons">*@
+                            <a asp-controller="Cart"  asp-action="GioHang" style="margin-left:10px" class="btn btn-outline-secondary float-right notification">
+                                <span><img style="width:27px; height:27px" src="~/images/cart.png" /></span>
+                                @if (ViewBag.cart != null)
+                                {
+                                    @foreach (var item in ViewBag.cart)
+                                    {
+                                        <span class="badge1">@ViewBag.count</span>
+                                    }
+                                }
+                            </a>
                             <partial name="_LoginPartial" />
-                            @*</div>*@
-
                         </div>
-
+                        
                     </div>
                 </div>
             </div>
@@ -121,7 +102,7 @@
             </nav>
         </header>
         @RenderBody()
-        
+
         <footer class="site-footer border-top">
             <div class="container">
                 <div class="row">
@@ -159,14 +140,14 @@
                         </div>
 
                         @*<div class="block-7">
-                    <form action="#" method="post">
-                        <label for="email_subscribe" class="footer-heading">Subscribe</label>
-                        <div class="form-group">
-                            <input type="text" class="form-control py-4" id="email_subscribe" placeholder="Email">
-                            <input type="submit" class="btn btn-sm btn-primary" value="Send">
-                        </div>
-                    </form>
-                </div>*@
+                                <form action="#" method="post">
+                                    <label for="email_subscribe" class="footer-heading">Subscribe</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control py-4" id="email_subscribe" placeholder="Email">
+                                        <input type="submit" class="btn btn-sm btn-primary" value="Send">
+                                    </div>
+                                </form>
+                            </div>*@
                     </div>
                 </div>
                 <div class="row pt-5 mt-5 text-center">
@@ -205,7 +186,7 @@
 
         </footer>
     </div>
- 
+
     <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/jquery-ui.js"></script>
     <script src="~/js/popper.min.js"></script>

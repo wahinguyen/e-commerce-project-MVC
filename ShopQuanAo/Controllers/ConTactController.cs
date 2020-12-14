@@ -21,6 +21,16 @@ namespace ShopQuanAo.Controllers
         // GET: ConTact/Create
         public IActionResult Create()
         {
+            var cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+            if (cart == null)
+                return View();
+            else
+            {
+                ViewBag.cart = cart;
+                ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
+                ViewBag.count = cart.Count();
+            }
+
             return View();
         }
 
@@ -31,6 +41,7 @@ namespace ShopQuanAo.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ContactID,Name,Email,Phone,Address,Message")] Contact contact)
         {
+
             if (ModelState.IsValid)
             {
                 _context.Add(contact);
@@ -41,6 +52,15 @@ namespace ShopQuanAo.Controllers
         }
         public IActionResult Confirm1()
         {
+            var cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+            if (cart == null)
+                return View();
+            else
+            {
+                ViewBag.cart = cart;
+                ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
+                ViewBag.count = cart.Count();
+            }
             return View();
         }
     }

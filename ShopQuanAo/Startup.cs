@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -28,9 +27,9 @@ namespace ShopQuanAo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddSession();
+            services.AddHttpClient();
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<SaleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
