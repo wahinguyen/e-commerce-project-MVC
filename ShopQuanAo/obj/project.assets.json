@@ -9475,11 +9475,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\ThuongMaiDienTu\\ShopQuanAo\\ShopQuanAo.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\ThuongMaiDienTu\\TMDT\\ShopQuanAo\\ShopQuanAo.csproj",
       "projectName": "ShopQuanAo",
-      "projectPath": "C:\\Users\\Admin\\Desktop\\ThuongMaiDienTu\\ShopQuanAo\\ShopQuanAo.csproj",
+      "projectPath": "C:\\Users\\Admin\\Desktop\\ThuongMaiDienTu\\TMDT\\ShopQuanAo\\ShopQuanAo.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Desktop\\ThuongMaiDienTu\\ShopQuanAo\\obj\\",
+      "outputPath": "C:\\Users\\Admin\\Desktop\\ThuongMaiDienTu\\TMDT\\ShopQuanAo\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
