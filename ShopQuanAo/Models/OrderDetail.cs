@@ -21,6 +21,7 @@ namespace ShopQuanAo.Models
         [DisplayName("Số lượng")]
         public int SoLuong { get; set; }
         public double ThanhTien { get; set; }
+        public double GiaGiam { get; set; }
         public virtual Order Order { get; set; }
         public virtual SanPham SanPham { get; set; }
     }

@@ -1,0 +1,47 @@
+﻿@model ShopQuanAo.Models.Discount
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Discount</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DiscountID" />
+            <div class="form-group">
+                <label asp-for="DiscountCode" class="control-label"></label>
+                <input asp-for="DiscountCode" class="form-control" />
+                <span asp-validation-for="DiscountCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QRCode" class="control-label"></label>
+                <input asp-for="QRCode" class="form-control" />
+                <span asp-validation-for="QRCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateExpired" class="control-label"></label>
+                <input asp-for="DateExpired" class="form-control" />
+                <span asp-validation-for="DateExpired" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

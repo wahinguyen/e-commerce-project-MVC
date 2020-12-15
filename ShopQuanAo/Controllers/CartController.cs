@@ -48,13 +48,17 @@ namespace ShopQuanAo.Controllers
 
         public IActionResult GioHang()
         {
+
             var cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+
             if (cart == null)
                 return View();
             else
             {
                 ViewBag.cart = cart;
                 ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
+                ViewBag.final = cart.Sum(item => item.ThanhTien);
+                ViewBag.voucher = cart.Select(item => item.GiaGiam).FirstOrDefault();
                 ViewBag.count = cart.Count();
             }
             return View();
@@ -68,7 +72,7 @@ namespace ShopQuanAo.Controllers
             {
                 List<OrderDetail> cart = new List<OrderDetail>
             {
-                new OrderDetail { SanPham = db.Sanphams.FirstOrDefault(p => p.MaSP == id), SoLuong = 1}
+                new OrderDetail { SanPham = db.Sanphams.FirstOrDefault(p => p.MaSP == id), SoLuong = 1, ThanhTien = db.Sanphams.Where(p => p.MaSP == id).Select(p => p.DonGia).FirstOrDefault()}
             };
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
@@ -79,7 +83,7 @@ namespace ShopQuanAo.Controllers
                 if (index != -1)
                     cart[index].SoLuong++;
                 else
-                    cart.Add(new OrderDetail { SanPham = db.Sanphams.FirstOrDefault(p => p.MaSP == id), SoLuong = 1 });
+                    cart.Add(new OrderDetail { SanPham = db.Sanphams.FirstOrDefault(p => p.MaSP == id), SoLuong = 1, ThanhTien = db.Sanphams.Where(p => p.MaSP == id).Select(p => p.DonGia).FirstOrDefault()});
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
             return RedirectToAction("GioHang");
@@ -91,10 +95,29 @@ namespace ShopQuanAo.Controllers
             List<OrderDetail> cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
             int index = IsExist(MaSP);
             cart[index].SoLuong = txtSoLuong;
+            cart[index].ThanhTien = cart[index].SanPham.DonGia * cart[index].SoLuong;
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
 
             return RedirectToAction("GioHang");
+        }
 
+        [HttpPost]
+        public IActionResult AddDiscount(string qrCode)
+        {
+            List<OrderDetail> cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+            var discount = db.Discount
+                .AsEnumerable()
+                .Where(d => d.QRCode == qrCode)
+                .Any();
+            if (discount)
+            {
+                double amountDiscount = db.Discount.Where(d => d.QRCode == qrCode).Select(d => d.Amount).FirstOrDefault();
+                cart.ForEach(s => s.ThanhTien = s.SanPham.DonGia * s.SoLuong - amountDiscount * s.SoLuong);
+                cart.ForEach(s => s.GiaGiam = amountDiscount);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                return RedirectToAction("GioHang");
+            }
+            throw new Exception("Khong tim thay ma");
         }
 
         [Route("remove/{id}")]
@@ -126,11 +149,10 @@ namespace ShopQuanAo.Controllers
         [HttpGet]
         public async Task<IActionResult> Checkout()
         {
-            var name = User.Identity.Name;
-            var user = await  _userManager.FindByNameAsync(name);
-
             if (User.Identity.IsAuthenticated)
             {
+                var name = User.Identity.Name;
+                var user = await _userManager.FindByNameAsync(name);
                 var cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
                 if (cart == null)
                     return View();

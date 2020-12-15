@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ShopQuanAo.Models.Discount>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+    <head>
+        <title>ProShop &mdash; Colorlib e-Commerce Template</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+        <link rel="stylesheet" href="~/fonts/icomoon/style.css">
+
+        <link rel="stylesheet" href="~/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/css/magnific-popup.css">
+        <link rel="stylesheet" href="~/css/jquery-ui.css">
+        <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+
+        <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
+
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+        <link rel="stylesheet" href="~/css/aos.css">
+
+        <link rel="stylesheet" href="~/css/style.css">
+        <link rel="stylesheet" href="~/css/StyleSheet.css">
+
+    </head>
+    <div id="layoutSidenav_content">
+        <main>
+            <h1 style="margin-top:60px; color:black">Phiếu giảm giá</h1>
+
+            <p>
+                <a class="btn btn-warning" asp-action="Create">Tạo mới</a>
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DiscountCode)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.QRCode)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Amount)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DateExpired)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiscountCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.QRCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateExpired)
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.DiscountID">Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            </main>
+        </div>

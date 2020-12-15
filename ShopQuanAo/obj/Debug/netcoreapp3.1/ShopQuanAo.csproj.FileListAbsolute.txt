@@ -1651,3 +1651,8 @@ C:\Users\Admin\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\bin\Debug\netcoreapp3.1\B
 C:\Users\Admin\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\bin\Debug\netcoreapp3.1\Source.dll
 C:\Users\Admin\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\ShopQuanAo.csproj.CoreCompileInputs.cache
 C:\Users\Admin\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\ShopQuanAo.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Admin\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Discount\Create.cshtml.g.cs
+C:\Users\Admin\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Discount\Delete.cshtml.g.cs
+C:\Users\Admin\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Discount\Details.cshtml.g.cs
+C:\Users\Admin\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Discount\Edit.cshtml.g.cs
+C:\Users\Admin\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Discount\Index.cshtml.g.cs

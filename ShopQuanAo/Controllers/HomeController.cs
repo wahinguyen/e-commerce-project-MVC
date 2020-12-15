@@ -49,14 +49,34 @@ namespace ShopQuanAo.Controllers
             if (maloaisp == 0)
             {
                 int sotrang = _context.Sanphams.Count() / 6;
-                ViewBag.Count = sotrang;
-
                 int number = 1;
+                var sanphams = _context.Sanphams.Include(s => s.LoaiSanPham);
+                var cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+                if (cart == null)
+                {
+                    ViewBag.Count = sotrang;
+
+                    if (page != null)
+                    {
+                        number = page.GetValueOrDefault() * 6;
+                    }
+                    //var item = from p in _context.Sanphams
+                    //           select p;
+                    ViewBag.Count1 = sotrang;
+                    return View(sanphams.OrderBy(s => s.MaSP).Skip(number).Take(6).ToList());
+                }
+                else
+                {
+                    ViewBag.cart = cart;
+                    ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
+                    ViewBag.count = cart.Count();
+                }
+                ViewBag.Count1 = sotrang;
+
                 if (page != null)
                 {
                     number = page.GetValueOrDefault() * 6;
                 }
-                var sanphams = _context.Sanphams.Include(s => s.LoaiSanPham);
                 //var item = from p in _context.Sanphams
                 //           select p;
                 return View(sanphams.OrderBy(s => s.MaSP).Skip(number).Take(6).ToList());
@@ -84,13 +104,21 @@ namespace ShopQuanAo.Controllers
             var sanPham = await _context.Sanphams.Include(s => s.LoaiSanPham).FirstOrDefaultAsync(m => m.MaSP == id);
 
             var sanPhamFeature = await _context.Sanphams.Include(s => s.LoaiSanPham).Where(m => m.Feature == 1).ToListAsync();
+            var cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
 
             SanPhamVM spVM = new SanPhamVM()
             {
                 Sanpham = sanPham,
                 ListSanPhamFeature = sanPhamFeature
             };
-
+            if (cart == null)
+                return View(spVM);
+            else
+            {
+                ViewBag.cart = cart;
+                ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
+                ViewBag.count = cart.Count();
+            }
             return View(spVM);
         }
         public async Task<IActionResult> Thongtinsanpham(int id)
@@ -103,12 +131,21 @@ namespace ShopQuanAo.Controllers
 
             var sanPhamFeature = await _context.Sanphams.Include(s => s.LoaiSanPham).Where(m => m.Feature == 1).ToListAsync();
 
+            var cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+
             SanPhamVM spVM = new SanPhamVM()
             {
                 Sanpham = sanPham,
                 ListSanPhamFeature = sanPhamFeature
             };
-
+            if (cart == null)
+                return View(spVM);
+            else
+            {
+                ViewBag.cart = cart;
+                ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
+                ViewBag.count = cart.Count();
+            }
             return View(spVM);
         }
         public ActionResult TimKiem(long max, long min)
