@@ -39,6 +39,20 @@
                                 @Html.DisplayFor(model =>
                                 model.Phone)
                             </dd>
+                            <dt class="col-sm-3">
+                                Giá giảm
+                            </dt>
+                            <dd class="col-sm-9">
+                                @Html.DisplayFor(model =>
+                                model.GiaGiam)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Tổng tiền
+                            </dt>
+                            <dd class="col-sm-9">
+                                @Html.DisplayFor(model =>
+                                model.Total)
+                            </dd>
                         </dl>
                     </div>
                 </div>
@@ -72,16 +86,18 @@
                                 }
                             }
                         </tbody>
-                        <tr>
-                            <td align="right" colspan="6">Total:</td>
-                            <td>@ViewBag.Total</td>
-                        </tr>
-
                     </table>
                 </div>
             </div>
             <div>
                 <a class="btn btn-outline-warning" asp-action="Index">Quay về</a>
+            </div>
+            <div>
+                <form asp-action="Detail">
+                    <input type="hidden" asp-for="OrderId" />
+                    <input type="submit" value="Hoàn tất" class="btn btn-danger" onclick=" return confirm('Hoàn tất đơn hàng này?');" /> |
+                    <a class="btn btn-outline-warning" asp-action="Index">Quay về</a>
+                </form>
             </div>
             </main>
         </div>

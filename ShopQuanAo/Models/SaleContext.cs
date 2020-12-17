@@ -17,8 +17,6 @@ namespace ShopQuanAo.Models
 
         public virtual DbSet<SanPham> Sanphams { get; set; }
         public virtual DbSet<LoaiSanPham> LoaiSanPhams { get; set; }
-        public virtual DbSet<KhachHang> KhachHangs { get; set; }
-        public virtual DbSet<NhanVien> NhanViens { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Contact> Contacts { get; set; }

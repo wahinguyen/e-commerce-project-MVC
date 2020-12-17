@@ -93,15 +93,23 @@
 
                                             <tr>
                                                 <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
-                                                <td class="text-black">@(item.SanPham.DonGia * item.SoLuong)</td>
+                                                <td class="text-black">@item.ThanhTien</td>
                                             </tr>
-                                            
+
                                         }
-                                <tr>
-                                    <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-                                    <td class="text-black font-weight-bold"><strong>@ViewBag.total</strong></td>
-                                </tr>
                                     }
+                                    <tr>
+                                        <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+                                        <td class="text-black font-weight-bold"><strong>@ViewBag.total</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-black font-weight-bold"><strong>Voucher</strong></td>
+                                        <td class="text-black font-weight-bold"><strong>@ViewBag.voucher</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-black font-weight-bold"><strong>Total final</strong></td>
+                                        <td class="text-black font-weight-bold"><strong>@ViewBag.final</strong></td>
+                                    </tr>
                                 </tbody>
                             </table>
 

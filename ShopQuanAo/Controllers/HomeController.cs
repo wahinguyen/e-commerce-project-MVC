@@ -68,7 +68,6 @@ namespace ShopQuanAo.Controllers
                 else
                 {
                     ViewBag.cart = cart;
-                    ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
                     ViewBag.count = cart.Count();
                 }
                 ViewBag.Count1 = sotrang;
@@ -86,15 +85,14 @@ namespace ShopQuanAo.Controllers
             else
             {
                 var cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+                var sanPhams = _context.Sanphams.Include(s => s.LoaiSanPham).Where(x => x.MaLoaiSP == maloaisp);
                 if (cart == null)
-                    return View();
+                    return View(sanPhams);
                 else
                 {
                     ViewBag.cart = cart;
-                    ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
                     ViewBag.count = cart.Count();
                 }
-                var sanPhams = _context.Sanphams.Include(s => s.LoaiSanPham).Where(x => x.MaLoaiSP == maloaisp);
                 return View(sanPhams);
             }
 

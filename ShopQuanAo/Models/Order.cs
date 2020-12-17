@@ -13,13 +13,7 @@ namespace ShopQuanAo.Models
         [DisplayName("Mã đơn hàng")]
         public int OrderId { get; set; }
         [DisplayName("Mã khách hàng")]
-        [ForeignKey("KhachHang")]
-        [Column(Order = 0)]
-        public string MaKH { get; set; }
-        [DisplayName("Mã nhân viên")]
-        [ForeignKey("NhanVien")]
-        [Column(Order = 1)]
-        public string MaNV { get; set; }
+        public string KhachHang { get; set; }
         [StringLength(250)]
         public string Code { get; set; }
         [Required]
@@ -34,10 +28,12 @@ namespace ShopQuanAo.Models
         [DisplayName("Số điện thoại")]
         [Required]
         public string Phone { get; set; }
+        public double Total { get; set; }
+        public double GiaGiam { get; set; }
+        public int StatusID { get; set; }
+
         [DisplayName("Ngày đặt hàng")]
         public DateTime OrderDate { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-        public virtual KhachHang KhachHang { get; set; }
-        public virtual NhanVien NhanVien { get; set; }
     }
 }

@@ -13,10 +13,17 @@ namespace ShopQuanAo.Areas.Admin.Controllers
     public class DiscountController : Controller
     {
         private readonly SaleContext _context;
+        private readonly Random _random = new Random();
 
         public DiscountController(SaleContext context)
         {
             _context = context;
+        }
+
+        // Generates a random number within a range.      
+        public int RandomNumber(int min, int max)
+        {
+            return _random.Next(min, max);
         }
 
         #region Encode
@@ -76,7 +83,9 @@ namespace ShopQuanAo.Areas.Admin.Controllers
                 maxOrderCount += 1;
                 string orderCode = String.Format("{0:D4}", maxOrderCount);
 
-                var code = String.Format("{0}-{1}", codePrefix, orderCode);
+                int random = RandomNumber(1000,100000);
+
+                var code = String.Format("{0}-{1}-{2}", codePrefix, orderCode, random);
 
                 var data = new Discount()
                 {

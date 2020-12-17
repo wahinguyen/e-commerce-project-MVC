@@ -57,7 +57,7 @@ namespace ShopQuanAo.Controllers
             {
                 ViewBag.cart = cart;
                 ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
-                ViewBag.final = cart.Sum(item => item.ThanhTien);
+                ViewBag.final = cart.Sum(item => item.ThanhTien) - cart.Select(item => item.GiaGiam).FirstOrDefault();
                 ViewBag.voucher = cart.Select(item => item.GiaGiam).FirstOrDefault();
                 ViewBag.count = cart.Count();
             }
@@ -107,17 +107,21 @@ namespace ShopQuanAo.Controllers
             List<OrderDetail> cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
             var discount = db.Discount
                 .AsEnumerable()
-                .Where(d => d.QRCode == qrCode)
+                .Where(d => d.QRCode == qrCode && d.DateExpired >= DateTime.Now)
                 .Any();
+
             if (discount)
             {
                 double amountDiscount = db.Discount.Where(d => d.QRCode == qrCode).Select(d => d.Amount).FirstOrDefault();
-                cart.ForEach(s => s.ThanhTien = s.SanPham.DonGia * s.SoLuong - amountDiscount * s.SoLuong);
+                cart.ForEach(s => s.ThanhTien = s.SanPham.DonGia * s.SoLuong);
                 cart.ForEach(s => s.GiaGiam = amountDiscount);
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
                 return RedirectToAction("GioHang");
             }
-            throw new Exception("Khong tim thay ma");
+            else
+            {
+                throw new Exception("Mã đã hết hạn hoặc không tồn tại");
+            }
         }
 
         [Route("remove/{id}")]
@@ -160,6 +164,8 @@ namespace ShopQuanAo.Controllers
                 {
                     ViewBag.cart = cart;
                     ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
+                    ViewBag.voucher = cart.Select(item => item.GiaGiam).FirstOrDefault();
+                    ViewBag.final = cart.Sum(item => item.ThanhTien) - cart.Select(item => item.GiaGiam).FirstOrDefault();
                 }
                 Order order = new Order()
                 {
@@ -171,15 +177,20 @@ namespace ShopQuanAo.Controllers
             }
             return RedirectToAction("Login", "Account");
         }
+
         [HttpPost]
-        public IActionResult Checkout(Order order)
+        public async Task<IActionResult> Checkout(Order order)
         {
             if (ModelState.IsValid)
             {
+
+                var name = User.Identity.Name;
+                var user = await _userManager.FindByNameAsync(name);
+
+                double discount = 0;
                 var codePrefix = DateTime.Now.ToString("ddMMyyyy");
 
                 var maxOrderCount = db.Orders
-                    .AsEnumerable()
                     .Where(e => e.Code.Contains(codePrefix))
                     .Count();
 
@@ -189,14 +200,20 @@ namespace ShopQuanAo.Controllers
                 var code = String.Format("{0}-{1}", codePrefix, orderCode);
 
                 List<OrderDetail> cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+
+                discount = cart.Select(item => item.GiaGiam).FirstOrDefault();
+
                 Order orderTemp = new Order
                 {
                     Code = code,
+                    KhachHang = user.Email,
                     OrderDate = DateTime.Now,
                     Phone = order.Phone,
                     Address = order.Address,
                     Email = order.Email,
                     CustomerName = order.CustomerName,
+                    GiaGiam = discount,
+                    StatusID = 0,
                 };
                 db.Orders.Add(orderTemp);
                 db.SaveChanges();
@@ -221,7 +238,10 @@ namespace ShopQuanAo.Controllers
                     {
                         product.SoLuong = product.SoLuong - item.SoLuong;
                     }
+
+                    orderTemp.Total += item.ThanhTien; 
                 }
+                ViewBag.total1 = orderTemp.Total = orderTemp.Total - discount;
                 db.SaveChanges();
                 cart.Clear();
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
