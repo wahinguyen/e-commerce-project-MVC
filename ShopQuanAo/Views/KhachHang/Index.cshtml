@@ -1,88 +1,5 @@
-﻿@model IEnumerable<ShopQuanAo.Models.Order>
+﻿@model ShopQuanAo.Models.KhachHangModels
 
-@*@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.KhachHang)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Code)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CustomerName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Total)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GiaGiam)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.KhachHang)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CustomerName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Phone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Total)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GiaGiam)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderDate)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>*@
 
 <link rel="stylesheet" href="~/css/style.css">
 <link rel="stylesheet" href="~/css/bootstrap.min.css">
@@ -96,38 +13,82 @@
         </div>
     </div>
 </div>
+@{
+    string render(int status)
+    {
+        string statusName = "";
+        if (status == 0)
+        {
+            statusName = "Wating";
+        }
+        else if (status == 1)
+        {
+            statusName = "Completed";
+        }
+        else
+        {
+            statusName = "Deleted";
+        }
+        return statusName;
+    }
 
-<div class="site-section">
-    <div class="container">
-        <div class="row mb-5">
-            <div class="col-md-12">
+    string renderPoint(double point)
+    {
+        string pointName = "";
+        if (point == 0 || point == 100 || point == 200)
+        {
+            pointName = "Silver";
+        }
+        else if (point == 300)
+        {
+            pointName = "Gold";
+        }
+        else
+        {
+            pointName = "Diamond";
+        }
+        return pointName;
+    }
+
+    double point = Model.PointMember;
+}
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <div class="site-section">
                 <div class="site-blocks-table">
+                    <h2 style="color:red">Member:  @renderPoint(point)</h2>
                     <table class="table table-bordered">
                         <tr>
                             <th class="product-thumbnail">Customer</th>
                             <th class="product-name">CustomerName</th>
+                            <th class="product-quantity">Discount</th>
+                            <th class="product-total">Shipping</th>
                             <th class="product-price">Total</th>
-                            <th class="product-quantity">GiaGiam</th>
                             <th class="product-total">OrderDate</th>
                             <th class="product-remove">Status</th>
                         </tr>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Orders)
                         {
-                    <tr>
-                        <td class="product-thumbnail">
-                            <h2 class="h5 text-black">@Html.DisplayFor(modelItem => item.KhachHang)</h2>
-                        </td>
-                        <td class="product-name">
-                            <h2 class="h5 text-black">@Html.DisplayFor(modelItem => item.CustomerName)</h2>
-                        </td>
-                        <td>@Html.DisplayFor(modelItem => item.Total)</td>
-                        <td>@Html.DisplayFor(modelItem => item.GiaGiam)</td>
-                        <td>@Html.DisplayFor(modelItem => item.OrderDate)</td>
-                        <td>@Html.DisplayFor(modelItem => item.StatusID)</td>
-                        <td>
-                            <a class="btn btn-outline-danger" asp-controller="KhachHang" asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
-                        </td>
-                    </tr>
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <h2 class="h5 text-black">@Html.DisplayFor(modelItem => item.KhachHang)</h2>
+                                </td>
+                                <td class="product-name">
+                                    <h2 class="h5 text-black">@Html.DisplayFor(modelItem => item.CustomerName)</h2>
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.GiaGiam)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Shipping)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Total)</td>
+                                <td>@Html.DisplayFor(modelItem => item.OrderDate)</td>
+                                <td>
+                                    @render(item.StatusID)
+
+                                </td>
+                                <td>
+                                    <a class="btn btn-outline-danger" asp-controller="KhachHang" asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
+                                </td>
+                            </tr>
                         }
                     </table>
                 </div>
@@ -193,3 +154,17 @@
         </div>
     </div>
 </div>
+
+<script>
+    const STATUS = {
+        1: 'sdfs',
+        0: 'dsf'
+    }
+
+
+    document.querySelectorAll('.status[data-status]').forEach(e => {
+        status = e.dataset.status
+        e.innerHTML = status ? STATUS[status] : ''
+    })
+
+</script>

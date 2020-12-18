@@ -149,7 +149,7 @@ namespace ShopQuanAo.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("MaSP,TenSP,DonGia,MaLoaiSP,HinhSP,Description")] SanPham sanPham, IFormFile photo)
+        public IActionResult Edit(int id, SanPham sanPham, IFormFile photo)
         {
             if (id != sanPham.MaSP)
             {
@@ -160,20 +160,25 @@ namespace ShopQuanAo.Controllers
             {
                 try
                 {
+                    int tonkho = _context.Sanphams.Where(s => s.MaSP == sanPham.MaSP).Select(s => s.SoLuong).FirstOrDefault();
+
                     if (photo == null || photo.Length == 0)
                     {
-                        sanPham.HinhSP = sanPham.HinhSP;
+                        var image = _context.Sanphams.Where(s => s.MaSP == sanPham.MaSP).Select(s => s.HinhSP).FirstOrDefault();
+                        sanPham.HinhSP = image;
+                        sanPham.SoLuong = tonkho;
+                        _context.Sanphams.Update(sanPham);
                     }
                     else
                     {
                         var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", photo.FileName);
                         var stream = new FileStream(path, FileMode.Create);
-                        photo.CopyToAsync(stream);
+                        photo.CopyTo(stream);
+                        sanPham.SoLuong = tonkho;
                         sanPham.HinhSP = photo.FileName;
                         _context.Sanphams.Update(sanPham);
                     }
-
-                    _context.SaveChangesAsync();
+                    _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -188,8 +193,6 @@ namespace ShopQuanAo.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaLoaiSP"] = new SelectList(_context.LoaiSanPhams, "MaLoaiSP", "TenLoaiSP", sanPham.MaLoaiSP);
-
             return View(sanPham);
         }
 

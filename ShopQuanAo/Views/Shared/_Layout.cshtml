@@ -69,7 +69,7 @@
                         </div>
                         <div class="col-6 col-md-4 order-3 order-md-3 text-right float-right">
                             <a asp-controller="Cart" asp-action="GioHang" style="margin-left:10px" class="btn btn-outline-secondary float-right notification">
-                                <span><img style="width:27px; height:27px" src="~/images/cart.png" /></span>
+                                <span><img style="width:30px; height:30px" src="~/images/trolley.png" /></span>
                                 @if (ViewBag.cart != null)
                                 {
                                     @foreach (var item in ViewBag.cart)
@@ -78,8 +78,6 @@
                                     }
                                 }
                             </a>
-                            
-
                             <partial name="_LoginPartial" />
                         </div>
 
@@ -95,8 +93,6 @@
                         <li>
                             <a asp-controller="Home" asp-action="Index">Product</a>
                         </li>
-
-
                         <li><a asp-controller="About" asp-action="Index">About</a></li>
                         <li><a asp-controller="Contact" asp-action="Create">Contact</a></li>
                     </ul>

@@ -165,7 +165,8 @@ namespace ShopQuanAo.Controllers
                     ViewBag.cart = cart;
                     ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
                     ViewBag.voucher = cart.Select(item => item.GiaGiam).FirstOrDefault();
-                    ViewBag.final = cart.Sum(item => item.ThanhTien) - cart.Select(item => item.GiaGiam).FirstOrDefault();
+                    ViewBag.shipping = 20000;
+                    ViewBag.final = cart.Sum(item => item.ThanhTien) - cart.Select(item => item.GiaGiam).FirstOrDefault() + 20000;
                 }
                 Order order = new Order()
                 {
@@ -214,8 +215,17 @@ namespace ShopQuanAo.Controllers
                     CustomerName = order.CustomerName,
                     GiaGiam = discount,
                     StatusID = 0,
+                    Shipping = 20000,
                 };
                 db.Orders.Add(orderTemp);
+                db.SaveChanges();
+
+                Point point = new Point()
+                {
+                    Name = user.Email,
+                    PointMember = 100,
+                };
+                db.Point.Add(point);
                 db.SaveChanges();
 
                 var query = db.Orders.FirstOrDefault(p => p.OrderId == orderTemp.OrderId);
@@ -239,7 +249,7 @@ namespace ShopQuanAo.Controllers
                         product.SoLuong = product.SoLuong - item.SoLuong;
                     }
 
-                    orderTemp.Total += item.ThanhTien; 
+                    orderTemp.Total += item.ThanhTien + 20000; 
                 }
                 ViewBag.total1 = orderTemp.Total = orderTemp.Total - discount;
                 db.SaveChanges();

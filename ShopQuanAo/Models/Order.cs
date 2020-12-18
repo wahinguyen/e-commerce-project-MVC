@@ -30,10 +30,10 @@ namespace ShopQuanAo.Models
         public string Phone { get; set; }
         public double Total { get; set; }
         public double GiaGiam { get; set; }
-        public int StatusID { get; set; }
-
         [DisplayName("Ngày đặt hàng")]
         public DateTime OrderDate { get; set; }
+        public double Shipping { get; set; }
+        public int StatusID { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

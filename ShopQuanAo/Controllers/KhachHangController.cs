@@ -24,14 +24,25 @@ namespace ShopQuanAo.Controllers
         // GET: KhachHang
         public IActionResult Index()
         {
-            if(User.Identity.IsAuthenticated)
+            double pointMember = db.Point
+                   .AsEnumerable()
+                   .Where(p => p.Name == User.Identity.Name)
+                   .Select(p => p.PointMember)
+                   .Sum();
+
+            if (User.Identity.IsAuthenticated)
             {
                 var query = db.Orders
                         .AsEnumerable()
                         .Where(o => o.KhachHang == User.Identity.Name)
                         .ToList();
 
-                return View(query);
+                var view = new KhachHangModels()
+                {
+                    PointMember = pointMember,
+                    Orders = query,
+                };
+                return View(view);
             }    
             return View();
         }

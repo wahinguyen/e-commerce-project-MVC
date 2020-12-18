@@ -48,15 +48,15 @@ namespace ShopQuanAo.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0eae6670-f4e4-43cd-8038-c1d82352a268",
-                            ConcurrencyStamp = "9c2254c8-9eac-42f3-a189-8898d1ad961e",
+                            Id = "03f6b22a-a4ac-4635-b3db-10c2a68bbec4",
+                            ConcurrencyStamp = "aedea0e4-2209-4df6-9093-9939856fc47f",
                             Name = "Visitor",
                             NormalizedName = "VISITOR"
                         },
                         new
                         {
-                            Id = "655ab585-b3ae-4c0b-b785-f645804e53a1",
-                            ConcurrencyStamp = "046e4e66-b790-4afa-a7e3-91cd2fa78965",
+                            Id = "bdea587a-dc3b-4a57-beab-229b96855725",
+                            ConcurrencyStamp = "29ba7d0e-88cd-48f9-8156-712fe237c702",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -274,6 +274,9 @@ namespace ShopQuanAo.Migrations
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StatusID")
+                        .HasColumnType("int");
 
                     b.Property<double>("Total")
                         .HasColumnType("float");

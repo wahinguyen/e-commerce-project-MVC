@@ -4,29 +4,47 @@
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
 
-
-
 @model List<Order>
 
-    <div id="layoutSidenav_content">
-        <main>
-            <h2>Đơn hàng</h2>
-            <h3>Count: @Model.Count</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td>Code</td>
-                        <td>Tên khách hàng</td>
-                        <td>Email</td>
-                        <td>Số điện thoại</td>
-                        <td>Tổng tiền</td>
-                        <td>Ngày đặt hàng</td>
-                        <td>Trạng thái</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+@{
+    string render(int status)
+    {
+        string statusName = "";
+        if (status == 0)
+        {
+            statusName = "Waiting";
+        }
+        else if (status == 1)
+        {
+            statusName = "Completed";
+        }
+        else
+        {
+            statusName = "Deleted";
+        }
+        return statusName;
+    }
+}
+
+<div id="layoutSidenav_content">
+    <main>
+        <h2>Đơn hàng</h2>
+        <h3>Count: @Model.Count</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Code</td>
+                    <td>Tên khách hàng</td>
+                    <td>Email</td>
+                    <td>Số điện thoại</td>
+                    <td>Tổng tiền</td>
+                    <td>Ngày đặt hàng</td>
+                    <td>Trạng thái</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
                     <tr>
                         <td>@item.Code</td>
                         <td>@item.CustomerName</td>
@@ -34,26 +52,14 @@
                         <td>@item.Phone</td>
                         <td>@item.Total</td>
                         <td>@item.OrderDate.ToString("dd/MM/yyyy")</td>
-                        <td class="status">@item.StatusID</td>
+                        <td>@render(item.StatusID)</td>
                         <td>
                             <a class="btn btn-outline-info" asp-controller="Order" asp-action="Detail" asp-route-id="@item.OrderId">Xem</a>
                             <a class="btn btn-outline-danger" asp-controller="Order" asp-action="Delete" asp-route-id="@item.OrderId">Xóa</a>
                         </td>
                     </tr>
-                    }
-                </tbody>
-            </table>
-            </main>
+                }
+            </tbody>
+        </table>
+    </main>
 </div>
-
-    <script>
-        var model = '@Model.Count()';
-
-        function showDivs(n) {
-            var i;
-            for (i = 0; i < model; i++) {
-            var x = document.getElementsByClassName("status");
-                x[i].innerHTML("123")
-            }
-        }
-    </script>

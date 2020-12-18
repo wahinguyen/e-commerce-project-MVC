@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShopQuanAo.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -108,6 +108,7 @@ namespace ShopQuanAo.Migrations
                     Phone = table.Column<string>(nullable: false),
                     Total = table.Column<double>(nullable: false),
                     GiaGiam = table.Column<double>(nullable: false),
+                    StatusID = table.Column<int>(nullable: false),
                     OrderDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -278,12 +279,12 @@ namespace ShopQuanAo.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "0eae6670-f4e4-43cd-8038-c1d82352a268", "9c2254c8-9eac-42f3-a189-8898d1ad961e", "Visitor", "VISITOR" });
+                values: new object[] { "03f6b22a-a4ac-4635-b3db-10c2a68bbec4", "aedea0e4-2209-4df6-9093-9939856fc47f", "Visitor", "VISITOR" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "655ab585-b3ae-4c0b-b785-f645804e53a1", "046e4e66-b790-4afa-a7e3-91cd2fa78965", "Administrator", "ADMINISTRATOR" });
+                values: new object[] { "bdea587a-dc3b-4a57-beab-229b96855725", "29ba7d0e-88cd-48f9-8156-712fe237c702", "Administrator", "ADMINISTRATOR" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

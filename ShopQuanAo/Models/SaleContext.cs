@@ -19,6 +19,7 @@ namespace ShopQuanAo.Models
         public virtual DbSet<LoaiSanPham> LoaiSanPhams { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Point> Point { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Discount> Discount { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)

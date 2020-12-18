@@ -1661,3 +1661,15 @@ C:\Users\Admin\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\R
 C:\Users\Admin\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Views\KhachHang\Details.cshtml.g.cs
 C:\Users\Admin\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Views\KhachHang\Edit.cshtml.g.cs
 C:\Users\Admin\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Views\KhachHang\Index.cshtml.g.cs
+C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\bin\Debug\netcoreapp3.1\BraintreeHttp-Dotnet.dll
+C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\bin\Debug\netcoreapp3.1\Source.dll
+C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Discount\Create.cshtml.g.cs
+C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Discount\Delete.cshtml.g.cs
+C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Discount\Details.cshtml.g.cs
+C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Discount\Edit.cshtml.g.cs
+C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Discount\Index.cshtml.g.cs
+C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Views\KhachHang\Create.cshtml.g.cs
+C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Views\KhachHang\Delete.cshtml.g.cs
+C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Views\KhachHang\Details.cshtml.g.cs
+C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Views\KhachHang\Edit.cshtml.g.cs
+C:\Users\AD\Desktop\ThuongMaiDienTu\TMDT\ShopQuanAo\obj\Debug\netcoreapp3.1\Razor\Views\KhachHang\Index.cshtml.g.cs
