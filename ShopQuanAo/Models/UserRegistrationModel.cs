@@ -10,9 +10,11 @@ namespace ShopQuanAo.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        [Required(ErrorMessage = "Email is required")]
+        public string PhoneNumber { get; set; }
         [EmailAddress]
         public string Email { get; set; }
+        [Required(ErrorMessage = "UserName is required")]
+        public string UserName { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]

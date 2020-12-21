@@ -11,7 +11,7 @@ namespace ShopQuanAo.Helper
     {
         public MappingProfile()
         {
-            CreateMap<UserRegistrationModel, User>().ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
+            CreateMap<UserRegistrationModel, User>().ForMember(u => u.UserName, opt => opt.MapFrom(x => x.UserName));
         }
     }
 }

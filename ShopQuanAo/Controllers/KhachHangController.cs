@@ -26,7 +26,7 @@ namespace ShopQuanAo.Controllers
         {
             double pointMember = db.Point
                    .AsEnumerable()
-                   .Where(p => p.Name == User.Identity.Name)
+                   .Where(p => p.Email == User.Identity.Name)
                    .Select(p => p.PointMember)
                    .Sum();
 

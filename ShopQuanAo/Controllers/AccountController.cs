@@ -33,6 +33,7 @@ namespace ShopQuanAo.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(UserRegistrationModel userModel)
@@ -42,27 +43,26 @@ namespace ShopQuanAo.Controllers
                 return View(userModel);
             }
             var user = _mapper.Map<User>(userModel);
-            var result = await _userManager.CreateAsync(user,
-            userModel.Password);
+            var result = await _userManager.CreateAsync(user, userModel.Password);
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
                 {
-                    ModelState.TryAddModelError(error.Code,
-                    error.Description);
+                    ModelState.TryAddModelError(error.Code, error.Description);
                 }
                 return View(userModel);
             }
             await _userManager.AddToRoleAsync(user, "Visitor");
-            return RedirectToAction(nameof(HomeController.Index),
-            "Home");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
+
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             return View(returnUrl);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLoginModel userModel, string returnUrl = null)
@@ -72,7 +72,7 @@ namespace ShopQuanAo.Controllers
                 return View(userModel);
             }
             var result = await
-            _signInManager.PasswordSignInAsync(userModel.Email,
+            _signInManager.PasswordSignInAsync(userModel.UserName,
             userModel.Password, userModel.RememberMe, false);
             if (result.Succeeded)
             {

@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\AD\\Desktop\\ThuongMaiDienTu\\TMDT\\ShopQuanAo\\ShopQuanAo.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\ThuongMaiDienTu\\TMDT\\ShopQuanAo\\ShopQuanAo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\AD\\Desktop\\ThuongMaiDienTu\\TMDT\\ShopQuanAo\\ShopQuanAo.csproj": {
+    "C:\\Users\\Admin\\Desktop\\ThuongMaiDienTu\\TMDT\\ShopQuanAo\\ShopQuanAo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\AD\\Desktop\\ThuongMaiDienTu\\TMDT\\ShopQuanAo\\ShopQuanAo.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\ThuongMaiDienTu\\TMDT\\ShopQuanAo\\ShopQuanAo.csproj",
         "projectName": "ShopQuanAo",
-        "projectPath": "C:\\Users\\AD\\Desktop\\ThuongMaiDienTu\\TMDT\\ShopQuanAo\\ShopQuanAo.csproj",
-        "packagesPath": "C:\\Users\\AD\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\AD\\Desktop\\ThuongMaiDienTu\\TMDT\\ShopQuanAo\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\ThuongMaiDienTu\\TMDT\\ShopQuanAo\\ShopQuanAo.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\ThuongMaiDienTu\\TMDT\\ShopQuanAo\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\AD\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -107,7 +110,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

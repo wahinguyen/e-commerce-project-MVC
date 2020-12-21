@@ -10,8 +10,8 @@ namespace ShopQuanAo.Models
     {
         [Key]
         public int PointID { get; set; }
-        [StringLength(250)]
-        public string Name { get; set; }
+        [StringLength(256)]
+        public string Email { get; set; }
         public double PointMember { get; set; }
     }
 }

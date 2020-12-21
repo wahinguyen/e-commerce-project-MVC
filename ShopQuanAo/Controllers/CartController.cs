@@ -207,7 +207,7 @@ namespace ShopQuanAo.Controllers
                 Order orderTemp = new Order
                 {
                     Code = code,
-                    KhachHang = user.Email,
+                    KhachHang = User.Identity.Name,
                     OrderDate = DateTime.Now,
                     Phone = order.Phone,
                     Address = order.Address,
@@ -222,7 +222,7 @@ namespace ShopQuanAo.Controllers
 
                 Point point = new Point()
                 {
-                    Name = user.Email,
+                    Email = user.Email,
                     PointMember = 100,
                 };
                 db.Point.Add(point);
