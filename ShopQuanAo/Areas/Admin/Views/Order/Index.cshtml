@@ -16,6 +16,14 @@
         }
         else if (status == 1)
         {
+            statusName = "Processing";
+        }
+        else if(status == 2)
+        {
+            statusName = "Delivery";
+        }
+        else if (status == 3)
+        {
             statusName = "Completed";
         }
         else
@@ -25,10 +33,43 @@
         return statusName;
     }
 }
+<style>
+    .row {
+        position: relative;
+        margin-bottom: 15px;
+    }
+
+    .filter {
+        margin-top: 30px;
+        margin-right: 20px;
+    }
+</style>
 
 <div id="layoutSidenav_content">
     <main>
-        <h2>Đơn hàng</h2>
+        <div style="position:center">
+            <form class="filter" asp-action="Index">
+                <div class="row">
+                    <select style="padding:5px" name="statusID">
+                        <option value="-100">Tất cả</option>
+                        <option value="-1">Đã hủy</option>
+                        <option value="0">Chờ xử lý</option>
+                        <option value="1">Đang xử lý</option>
+                        <option value="2">Giao hàng</option>
+                        <option value="3">Hoàn tất</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label for="timeStart">Từ ngày: </label>
+                    <input type="datetime-local" id="timeStart" name="timeStart">
+                    <label style="margin-left:15px;" for="timeEnd">Đến ngày: </label>
+                    <input type="datetime-local" id="timeEnd" name="timeEnd">
+                </div>
+                
+                <input type="submit" value="Tìm kiếm" class="btn btn-outline-secondary" />
+            </form>
+        </div>
+
         <h3>Count: @Model.Count</h3>
         <table class="table">
             <thead>
@@ -61,5 +102,6 @@
                 }
             </tbody>
         </table>
+
     </main>
 </div>

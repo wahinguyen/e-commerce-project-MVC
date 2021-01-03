@@ -19,9 +19,17 @@
         string statusName = "";
         if (status == 0)
         {
-            statusName = "Wating";
+            statusName = "Waiting";
         }
         else if (status == 1)
+        {
+            statusName = "Processing";
+        }
+        else if (status == 2)
+        {
+            statusName = "Delivery";
+        }
+        else if (status == 3)
         {
             statusName = "Completed";
         }
@@ -83,11 +91,19 @@
                                 <td>@Html.DisplayFor(modelItem => item.OrderDate)</td>
                                 <td>
                                     @render(item.StatusID)
-
                                 </td>
-                                <td>
-                                    <a class="btn btn-outline-danger" asp-controller="KhachHang" asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
-                                </td>
+                                @if(item.StatusID == 3 || item.StatusID == -1)
+                                {
+                                    <td hidden>
+                                        <a class="btn btn-outline-danger" asp-controller="KhachHang" asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <a class="btn btn-outline-danger" asp-controller="KhachHang" asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
+                                    </td>
+                                }
                             </tr>
                         }
                     </table>
@@ -96,75 +112,13 @@
         </div>
 
         <div class="row">
-
             <div class="col-md-6">
                 <div class="row mb-5">
                     <div class="col-md-6">
-                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</a>
-                    </div>
-                </div>
-                <form asp-controller="cart" asp-action="AddDiscount">
-
-                    <div class="row">
-                        <div class="col-md-12">
-                        </div>
-                        <div class="col-md-8 mb-3 mb-md-0">
-                        </div>
-                        <div class="col-md-4">
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-            <div class="col-md-6 pl-5">
-                <div class="row justify-content-end">
-                    <div class="col-md-7">
-                        <div class="row">
-                            <div class="col-md-12 text-right border-bottom mb-5">
-                            </div>
-                        </div>
-                        <div class="row mb-5">
-                            <div class="col-md-6">
-                            </div>
-                            <div class="col-md-6 text-right">
-                            </div>
-                        </div>
-                        <div class="row mb-5">
-                            <div class="col-md-6">
-                            </div>
-                            <div class="col-md-6 text-right">
-                            </div>
-                        </div>
-                        <div class="row mb-5">
-                            <div class="col-md-6">
-                            </div>
-                            <div class="col-md-6 text-right">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                            </div>
-                        </div>
-
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary">Continue Shopping</a>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
-
-<script>
-    const STATUS = {
-        1: 'sdfs',
-        0: 'dsf'
-    }
-
-
-    document.querySelectorAll('.status[data-status]').forEach(e => {
-        status = e.dataset.status
-        e.innerHTML = status ? STATUS[status] : ''
-    })
-
-</script>

@@ -17,11 +17,41 @@ namespace ShopQuanAo.Areas.Admin.Controllers
         {
             this.dataContext = dataContext;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? statusID, DateTime? timeStart, DateTime? timeEnd)
         {
-            var list = dataContext.Orders.ToList();
+            var query = dataContext.Orders.AsEnumerable();
+            
+            if(statusID == null || statusID == -100)
+            {
+                query = query.ToList();
+            } 
+            if(statusID == 0)
+            {
+                query = query.Where(o => o.StatusID == 0).ToList();
+            }
+            if (statusID == 1)
+            {
+                query = query.Where(o => o.StatusID == 1).ToList();
+            }
+            if (statusID == 2)
+            {
+                query = query.Where(o => o.StatusID == 2).ToList();
+            }
+            if (statusID == 3)
+            {
+                query = query.Where(o => o.StatusID == 3).ToList();
+            }
+            if (statusID == -1)
+            {
+                query = query.Where(o => o.StatusID == -1).ToList();
+            }
+            if (timeStart != null && timeEnd != null)
+            {
+                query = query.Where(o =>
+                    (timeStart <= o.OrderDate && o.OrderDate <= timeEnd)).ToList();
+            }
 
-            return View(list);
+            return View(query);
         }
         
 
@@ -87,11 +117,11 @@ namespace ShopQuanAo.Areas.Admin.Controllers
         }
 
         [HttpPost, ActionName("Detail")]
-        public IActionResult UpdateStatus(int id)
+        public IActionResult UpdateStatus(int id, int statusID)
         {
             var order = dataContext.Orders.Where(o => o.OrderId == id).FirstOrDefault();
 
-            order.StatusID = 1;
+            order.StatusID = statusID;
             dataContext.SaveChanges();
 
             return RedirectToAction("Index", "Order");

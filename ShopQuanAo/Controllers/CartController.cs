@@ -176,7 +176,21 @@ namespace ShopQuanAo.Controllers
                 };
                 return View(order);
             }
-            return RedirectToAction("Login", "Account");
+            else
+            {
+                var cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+                if (cart == null)
+                    return View();
+                else
+                {
+                    ViewBag.cart = cart;
+                    ViewBag.total = cart.Sum(item => item.SanPham.DonGia * item.SoLuong);
+                    ViewBag.voucher = cart.Select(item => item.GiaGiam).FirstOrDefault();
+                    ViewBag.shipping = 20000;
+                    ViewBag.final = cart.Sum(item => item.ThanhTien) - cart.Select(item => item.GiaGiam).FirstOrDefault() + 20000;
+                }
+                return View();
+            }    
         }
 
         [HttpPost]
@@ -184,78 +198,142 @@ namespace ShopQuanAo.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                var name = User.Identity.Name;
-                var user = await _userManager.FindByNameAsync(name);
-
-                double discount = 0;
-                var codePrefix = DateTime.Now.ToString("ddMMyyyy");
-
-                var maxOrderCount = db.Orders
-                    .Where(e => e.Code.Contains(codePrefix))
-                    .Count();
-
-                maxOrderCount += 1;
-                string orderCode = String.Format("{0:D4}", maxOrderCount);
-
-                var code = String.Format("{0}-{1}", codePrefix, orderCode);
-
-                List<OrderDetail> cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
-
-                discount = cart.Select(item => item.GiaGiam).FirstOrDefault();
-
-                Order orderTemp = new Order
+                if (User.Identity.IsAuthenticated)
                 {
-                    Code = code,
-                    KhachHang = User.Identity.Name,
-                    OrderDate = DateTime.Now,
-                    Phone = order.Phone,
-                    Address = order.Address,
-                    Email = order.Email,
-                    CustomerName = order.CustomerName,
-                    GiaGiam = discount,
-                    StatusID = 0,
-                    Shipping = 20000,
-                };
-                db.Orders.Add(orderTemp);
-                db.SaveChanges();
+                    var name = User.Identity.Name;
+                    var user = await _userManager.FindByNameAsync(name);
 
-                Point point = new Point()
-                {
-                    Email = user.Email,
-                    PointMember = 100,
-                };
-                db.Point.Add(point);
-                db.SaveChanges();
+                    double discount = 0;
+                    var codePrefix = DateTime.Now.ToString("ddMMyyyy");
 
-                var query = db.Orders.FirstOrDefault(p => p.OrderId == orderTemp.OrderId);
-                foreach (var item in cart)
-                {
-                    db.OrderDetails.Add(new OrderDetail()
+                    var maxOrderCount = db.Orders
+                        .Where(e => e.Code.Contains(codePrefix))
+                        .Count();
+
+                    maxOrderCount += 1;
+                    string orderCode = String.Format("{0:D4}", maxOrderCount);
+
+                    var code = String.Format("{0}-{1}", codePrefix, orderCode);
+
+                    List<OrderDetail> cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+
+                    discount = cart.Select(item => item.GiaGiam).FirstOrDefault();
+
+                    Order orderTemp = new Order
                     {
-                        OrderId = query.OrderId,
-                        MaSP = item.SanPham.MaSP,
-                        SoLuong = item.SoLuong,
-                        ThanhTien = item.SanPham.DonGia * item.SoLuong,
-                    });
+                        Code = code,
+                        KhachHang = User.Identity.Name,
+                        OrderDate = DateTime.Now,
+                        Phone = order.Phone,
+                        Address = order.Address,
+                        Email = order.Email,
+                        CustomerName = order.CustomerName,
+                        GiaGiam = discount,
+                        StatusID = 0,
+                        Shipping = 20000,
+                    };
+                    db.Orders.Add(orderTemp);
+                    db.SaveChanges();
 
-                    var product = db.Sanphams
-                        .AsEnumerable()
-                        .Where(s => s.MaSP == item.SanPham.MaSP)
-                        .FirstOrDefault();
-
-                    if (product != null)
+                    Point point = new Point()
                     {
-                        product.SoLuong = product.SoLuong - item.SoLuong;
+                        Email = user.Email,
+                        PointMember = 100,
+                    };
+                    db.Point.Add(point);
+                    db.SaveChanges();
+
+                    var query = db.Orders.FirstOrDefault(p => p.OrderId == orderTemp.OrderId);
+                    foreach (var item in cart)
+                    {
+                        db.OrderDetails.Add(new OrderDetail()
+                        {
+                            OrderId = query.OrderId,
+                            MaSP = item.SanPham.MaSP,
+                            SoLuong = item.SoLuong,
+                            ThanhTien = item.SanPham.DonGia * item.SoLuong,
+                        });
+
+                        var product = db.Sanphams
+                            .AsEnumerable()
+                            .Where(s => s.MaSP == item.SanPham.MaSP)
+                            .FirstOrDefault();
+
+                        if (product != null)
+                        {
+                            product.SoLuong = product.SoLuong - item.SoLuong;
+                        }
+
+                        orderTemp.Total += item.ThanhTien + 20000;
                     }
-
-                    orderTemp.Total += item.ThanhTien + 20000; 
+                    ViewBag.total1 = orderTemp.Total = orderTemp.Total - discount;
+                    db.SaveChanges();
+                    cart.Clear();
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                    return RedirectToAction("Confirm", "Cart");
                 }
-                ViewBag.total1 = orderTemp.Total = orderTemp.Total - discount;
-                db.SaveChanges();
-                cart.Clear();
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-                return RedirectToAction("Confirm", "Cart");
+                else
+                {
+                    double discount = 0;
+                    var codePrefix = DateTime.Now.ToString("ddMMyyyy");
+
+                    var maxOrderCount = db.Orders
+                        .Where(e => e.Code.Contains(codePrefix))
+                        .Count();
+
+                    maxOrderCount += 1;
+                    string orderCode = String.Format("{0:D4}", maxOrderCount);
+
+                    var code = String.Format("{0}-{1}", codePrefix, orderCode);
+
+                    List<OrderDetail> cart = SessionHelper.GetObjectFromJson<List<OrderDetail>>(HttpContext.Session, "cart");
+
+                    discount = cart.Select(item => item.GiaGiam).FirstOrDefault();
+
+                    Order orderTemp = new Order
+                    {
+                        Code = code,
+                        OrderDate = DateTime.Now,
+                        Phone = order.Phone,
+                        Address = order.Address,
+                        Email = order.Email,
+                        CustomerName = order.CustomerName,
+                        GiaGiam = discount,
+                        StatusID = 0,
+                        Shipping = 20000,
+                    };
+                    db.Orders.Add(orderTemp);
+                    db.SaveChanges();
+
+                    var query = db.Orders.FirstOrDefault(p => p.OrderId == orderTemp.OrderId);
+                    foreach (var item in cart)
+                    {
+                        db.OrderDetails.Add(new OrderDetail()
+                        {
+                            OrderId = query.OrderId,
+                            MaSP = item.SanPham.MaSP,
+                            SoLuong = item.SoLuong,
+                            ThanhTien = item.SanPham.DonGia * item.SoLuong,
+                        });
+
+                        var product = db.Sanphams
+                            .AsEnumerable()
+                            .Where(s => s.MaSP == item.SanPham.MaSP)
+                            .FirstOrDefault();
+
+                        if (product != null)
+                        {
+                            product.SoLuong = product.SoLuong - item.SoLuong;
+                        }
+
+                        orderTemp.Total += item.ThanhTien + 20000;
+                    }
+                    ViewBag.total1 = orderTemp.Total = orderTemp.Total - discount;
+                    db.SaveChanges();
+                    cart.Clear();
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                    return RedirectToAction("Confirm", "Cart");
+                }    
             }
             return View(order);
         }
